@@ -1,71 +1,46 @@
 ---
+import "../styles/design.css";
+
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+const siteName = "四川大学区块链协会";
+const description =
+  "川大跨专业科创学术社团，聚焦区块链、智能合约、Web3 与 AI-Agent 交叉方向，打造西南高校青年技术交流平台。";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>{title} | Portfolio</title>
-    <meta
-      name="description"
-      content="Your Name - Software Developer building interactive and seamless digital experiences with cutting-edge frontend development."
-    />
+    <title>{title === siteName ? title : `${title} | ${siteName}`}</title>
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101010" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="canonical" href="https://darkminimal.vercel.app/" />
-
-    <link
-      rel="preload"
-      href="/fonts/montserrat-latin-wght-normal.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-
-    <meta
-      property="og:title"
-      content="Your Name | Software Developer"
-    />
-    <meta
-      property="og:description"
-      content="Portfolio of Your Name, Software Developer specializing in frontend and interactive experiences."
-    />
-    <meta
-      property="og:image"
-      content="https://darkminimal.vercel.app/og.image.png"
-    />
-    <meta property="og:url" content="https://darkminimal.vercel.app" />
+    <meta property="og:title" content={`${title} | ${siteName}`} />
+    <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:site_name"
-      content="Your Name Portfolio"
-    />
-
-    <!-- Structured Data (JSON-LD) -->
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:image" content="/og.image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Your Name",
-        "alternateName": "Your Name",
-        "url": "https://darkminimal.vercel.app",
-        "image": "https://darkminimal.vercel.app/og.image.png",
-        "sameAs": [
-          "https://github.com",
-          "https://linkedin.com"
-        ],
-        "jobTitle": "Software Developer",
-        "description": "Software Developer building interactive and seamless digital experiences."
+        "@type": "Organization",
+        "name": "四川大学区块链协会",
+        "description": "川大跨专业科创学术社团，关注区块链与 AI-Agent 交叉创新。"
       }
     </script>
   </head>
-  <body class="bg-[--background] sm:px-28 lg:px-20 px-9">
+  <body class="bg-[--background] sm:px-10 lg:px-20 px-5 md:px-12">
     <slot />
+    <script>
+      import "../scripts/motion";
+    </script>
   </body>
 </html>
 
@@ -80,52 +55,97 @@ const { title } = Astro.props;
   }
 
   :root {
-    --background: #101010;
-    --sec: #a476ff;
-    --white: #dfdfdf;
-    --white-icon: #f3f3f398;
+    --background: #09090d;
+    --component-bg: #171717ef;
+    --sec: #b69aff;
+    --white: #f0eff5;
+    --white-icon: #a4a3b3;
     --white-icon-tr: #f3f3f310;
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
   }
 
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
   * {
     font-family:
       "Montserrat Variable",
+      "PingFang SC",
+      "Microsoft YaHei",
+      "Noto Sans CJK SC",
       -apple-system,
       system-ui,
       sans-serif;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
   }
-
-  *::selection {
+  html {
+    background: var(--background);
+  }
+  body {
+    min-width: 320px;
+    color: var(--white);
+    overflow-x: clip;
+  }
+  ::selection {
     background-color: var(--sec);
     color: var(--background);
   }
-
-  /* Scrollbar styles */
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline: 2px solid var(--sec);
+    outline-offset: 4px;
+  }
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 200;
+    transform: translateY(-200%);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--sec);
+    color: #15111f;
+    font-weight: 600;
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
 
   ::-webkit-scrollbar {
-    width: 15px;
+    width: 10px;
   }
-
   ::-webkit-scrollbar-track {
-    background: var(--container);
-    border-radius: 30px;
-  }
-
-  ::-webkit-scrollbar-thumb {
     background: var(--background);
-    border-radius: 10px;
   }
-
+  ::-webkit-scrollbar-thumb {
+    background: #39313f;
+    border: 2px solid var(--background);
+    border-radius: 20px;
+  }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--pink);
+    background: var(--sec);
   }
-
-  /* Scrollbar styles for Firefox */
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--line) var(--container);
+    scrollbar-color: #39313f var(--background);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 </style>

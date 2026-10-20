@@ -7,19 +7,29 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    label: "Home",
+    label: "关于",
     href: "#home",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M21 20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V9.48907C3 9.18048 3.14247 8.88917 3.38606 8.69972L11.3861 2.47749C11.7472 2.19663 12.2528 2.19663 12.6139 2.47749L20.6139 8.69972C20.8575 8.88917 21 9.18048 21 9.48907V20ZM19 19V9.97815L12 4.53371L5 9.97815V19H19Z"></path></svg>`,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"/></svg>`,
   },
   {
-    label: "Projects",
-    href: "#projects",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M4 5V19H20V7H11.5858L9.58579 5H4ZM12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5Z"></path></svg>`,
+    label: "活动",
+    href: "#activities",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 16H5V9h14v11Z"/></svg>`,
   },
   {
-    label: "Contact",
-    href: "#contact",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M21.7267 2.95694L16.2734 22.0432C16.1225 22.5716 15.7979 22.5956 15.5563 22.1126L11 13L1.9229 9.36919C1.41322 9.16532 1.41953 8.86022 1.95695 8.68108L21.0432 2.31901C21.5716 2.14285 21.8747 2.43866 21.7267 2.95694ZM19.0353 5.09647L6.81221 9.17085L12.4488 11.4255L15.4895 17.5068L19.0353 5.09647Z"></path></svg>`,
+    label: "规划",
+    href: "#roadmap",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M3 3h2v18H3V3Zm4 1h13l-2 4 2 4H7V4Zm0 10h13l-2 3 2 3H7v-6Z"/></svg>`,
+  },
+  {
+    label: "共建",
+    href: "#alliance",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M16 11a4 4 0 1 0-3.46-6 5 5 0 0 1 0 8A4 4 0 0 0 16 11ZM8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-3.33 0-6 1.67-6 3.5V20h12v-2.5C14 15.67 11.33 14 8 14Zm8 .1c-.42 0-.88.03-1.35.09A5.2 5.2 0 0 1 16 17.5V20h6v-2.5c0-1.83-2.67-3.4-6-3.4Z"/></svg>`,
+  },
+  {
+    label: "加入",
+    href: "#join",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></svg>`,
   },
 ];
 ---
@@ -27,33 +37,36 @@ const navItems: NavItem[] = [
 <div class="flex justify-center w-full">
   <nav
     id="main-nav"
+    aria-label="主导航"
     class="fixed left-1/2 -translate-x-1/2 z-[100] bg-[var(--background)] border border-1 border-transparent backdrop-blur-xl transition-all duration-500 ease-in-out md:top-6 md:bottom-auto bottom-0 w-[80%]"
   >
     <div class="container mx-auto flex justify-center items-center p-3">
-      <ul
-        class="flex w-full justify-between md:space-x-6 md:justify-center md:gap-12 gap-6"
-      >
-        {
-          navItems.map((item) => (
-            <li class="flex-1 md:flex-none">
-              <a
-                href={item.href}
-                class="flex flex-col items-center gap-1 text-[var(--white-icon)] transition-colors text-xs md:text-base relative group"
-              >
-                <div class="absolute -left-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-all duration-300 scale-0 opacity-0 bg-[#A9FF5B] nav-indicator hidden md:block" />
-                <span class="md:hidden flex items-center justify-center w-6 h-6">
-                  <fragment set:html={item.icon} />
-                </span>
-                <span class="hidden md:inline-block">{item.label}</span>
-                <span class="md:hidden">{item.label}</span>
-              </a>
-            </li>
-          ))
-        }
+      <ul class="flex w-full justify-between md:space-x-6 md:justify-center md:gap-12 gap-2">
+        {navItems.map((item) => (
+          <li class="flex-1 md:flex-none">
+            <a
+              href={item.href}
+              aria-current={
+                item.href === (Astro.url.hash || "#home")
+                  ? "location"
+                  : undefined
+              }
+              class="flex flex-col items-center gap-1 text-[var(--white-icon)] transition-colors text-xs md:text-base relative group rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--sec)]"
+            >
+              <span class="absolute -left-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-all duration-300 scale-0 opacity-0 bg-[var(--sec)] nav-indicator hidden md:block" />
+              <span
+                class="md:hidden flex items-center justify-center w-6 h-6"
+                set:html={item.icon}
+              />
+              <span>{item.label}</span>
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   </nav>
 </div>
+
 <style>
   nav {
     transform: translateX(-50%);
@@ -76,18 +89,17 @@ const navItems: NavItem[] = [
   }
 
   nav a.active {
-    color: white !important;
+    color: var(--white) !important;
   }
 
   @media (max-width: 767px) {
     nav {
       width: 100% !important;
-      transform: translateX(-50%);
       bottom: 0;
       left: 50%;
-      position: fixed;
       border-radius: 1rem 1rem 0 0;
       border-color: #ffffff10;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     nav.scrolling {
@@ -95,96 +107,83 @@ const navItems: NavItem[] = [
       background-color: var(--component-bg);
     }
 
-    body {
-      padding-bottom: 70px;
+    :global(body) {
+      padding-bottom: calc(84px + env(safe-area-inset-bottom));
     }
   }
 </style>
 
 <script>
   const nav = document.getElementById("main-nav");
-  const maxScroll = 1000;
   let rafId: number | null = null;
+  const motionPreference = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  );
 
   function updateNav() {
-    if (window.scrollY > 0) {
-      nav?.classList.add("scrolling");
-
-      const scrollProgress = Math.min(window.scrollY / maxScroll, 1);
-      const easeProgress = 1 - Math.pow(1 - scrollProgress, 4);
-
-      const minWidth = 528;
-      const maxWidth = window.innerWidth * 0.8;
-      const currentWidth = maxWidth - (maxWidth - minWidth) * easeProgress;
-
-      if (window.innerWidth >= 768) {
-        nav?.style.setProperty("width", `${currentWidth}px`);
-      }
-    } else {
-      nav?.classList.remove("scrolling");
-      nav?.style.setProperty("width", "80%");
-    }
+    nav?.classList.toggle("scrolling", window.scrollY > 0);
     rafId = null;
   }
 
   window.addEventListener(
     "scroll",
     () => {
-      if (!rafId) {
-        rafId = requestAnimationFrame(updateNav);
-      }
+      if (!rafId) rafId = requestAnimationFrame(updateNav);
     },
-    { passive: true }
+    { passive: true },
   );
 
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = e.currentTarget as HTMLAnchorElement;
-      const targetId = target.getAttribute("href")?.substring(1) || "";
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
+  document
+    .querySelectorAll<HTMLAnchorElement>('#main-nav a[href^="#"]')
+    .forEach((anchor) => {
+      anchor.addEventListener("click", (event) => {
+        const targetId = anchor.getAttribute("href")?.slice(1);
+        const targetElement = targetId
+          ? document.getElementById(targetId)
+          : null;
+        if (!targetElement) return;
+        event.preventDefault();
         targetElement.scrollIntoView({
-          behavior: "smooth",
+          behavior: motionPreference.matches ? "auto" : "smooth",
         });
-      }
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll("section[id]");
-    const navLinks = document.querySelectorAll("nav a[href^='#']");
-    const observerOptions = { threshold: 0.6 };
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          navLinks.forEach((link) => link.classList.remove("active"));
-          const id = entry.target.getAttribute("id");
-          const activeLink = document.querySelector(`nav a[href="#${id}"]`);
-          if (activeLink) {
-            activeLink.classList.add("active");
-          }
-        }
+        history.replaceState(null, "", `#${targetId}`);
       });
-    };
+    });
 
+  const sections = document.querySelectorAll<HTMLElement>("main section[id]");
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>(
+    '#main-nav a[href^="#"]',
+  );
+  updateNav();
+  const initialSection = location.hash || "#home";
+  navLinks.forEach((link) => {
+    const active = link.hash === initialSection;
+    link.classList.toggle("active", active);
+    if (active) link.setAttribute("aria-current", "location");
+    else link.removeAttribute("aria-current");
+  });
+  if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach((link) => {
+            const sectionNav: Record<string, string> = {
+              partnership: "#alliance",
+              archive: "#activities",
+              resources: "#activities",
+            };
+            const active =
+              link.hash ===
+              (sectionNav[entry.target.id] || `#${entry.target.id}`);
+            link.classList.toggle("active", active);
+            if (active) link.setAttribute("aria-current", "location");
+            else link.removeAttribute("aria-current");
+          });
+        });
+      },
+      { rootMargin: "-25% 0px -55% 0px", threshold: 0 },
     );
     sections.forEach((section) => observer.observe(section));
-  });
+  }
 </script>
-
-<style>
-  @media (max-width: 767px) {
-    body {
-      padding-bottom: 70px;
-    }
-  }
-
-  nav a.active {
-    color: white !important;
-  }
-</style>

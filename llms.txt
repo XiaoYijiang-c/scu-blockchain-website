@@ -1,35 +1,15 @@
-# Portfolio
+# 四川大学区块链协会网站
 
-> Open-source personal portfolio template for developers, built with Astro, React, and Tailwind CSS.
-> Designed to be cloned, customized, and deployed with minimal configuration; includes a working
-> contact form, a Spotify album embed, and a Firebase-backed like counter.
+本仓库基于 Dark Minimal Astro 模板改造为四川大学区块链协会学生科创交流网站。
 
-Built as an Astro static site with React islands for interactive components. Requires Node.js >= 20
-and pnpm >= 9. External services needed for full functionality: a Formspree account (contact form)
-and a Firebase project (like counter). Spotify embed is a plain HTML iframe--no API key required.
+## 栏目
+- 关于我们：跨专业科创社团介绍，关注区块链、智能合约、Web3 与 AI-Agent。
+- 活动与规划：社团学习活动、研究方向及发展目标。
+- 合作及西南高校区块链联盟倡议：联盟为倡议，所列高校为意向伙伴，不代表已确认加入。
+- 活动回顾与学习资源：栏目持续整理，记录与下载资料待补充。
+- 加入我们：招新和合作咨询入口待补充。
 
-## Docs
+## 免责声明
+网站为学生自建站点，不代表学校立场；分析仅用于教学，不构成投资建议，不鼓励加密资产交易。
 
-- [README](https://github.com/Gothsec/Portfolio/blob/main/README.md): setup instructions, configuration guides for Spotify and Formspree, project structure, and deployment notes
-- [Spotify configuration guide](https://github.com/Gothsec/Portfolio/blob/main/README.md#show-your-favorite-spotify-album-or-your-own-): how to embed a Spotify album via iframe in `src/components/footer.astro`
-- [Formspree configuration guide](https://github.com/Gothsec/Portfolio/blob/main/README.md#set-up-contact-form-formspree-): how to wire the contact form in `src/components/contact.astro` to a Formspree endpoint
-- [Live demo](https://darkminimal.vercel.app): deployed instance of the portfolio
-- [Astro Themes listing](https://astro.build/themes/details/dark-minimal/): official theme entry
-
-## Stack
-
-- **Astro** -- static site generator and component orchestrator
-- **React 19** -- interactive islands (LetterGlitch animation, LikeButton, SkillsList)
-- **Tailwind CSS** -- utility-first styling
-- **TypeScript** -- type checking across `.astro` and `.tsx` files
-- **Firebase / Firestore** -- realtime like counter with optimistic UI updates
-- **Formspree** -- serverless contact form backend
-- **Montserrat** (Fontsource variable) -- primary typeface
-- **OGL** -- WebGL utility used by the LetterGlitch canvas effect
-- **pnpm** -- package manager (enforced via `only-allow`)
-
-## Optional
-
-- [MIT License](https://opensource.org/licenses/mit): copyright 2026 Oscar Hernandez; attribution required on redistribution
-- [GitHub repository](https://github.com/Gothsec/Portfolio): source code, issues, and pull requests
-- [ReactBits Showcase](https://www.reactbits.dev/showcase): LetterGlitch component origin
+技术栈和维护说明请参见根目录 README 与 `docs/plan.md`。

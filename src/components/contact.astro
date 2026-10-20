@@ -1,92 +1,33 @@
-<section id="contact" class="w-full py-12 border-t border-[#ffffff10]">
+<section id="join" class="w-full py-14 md:py-20 border-t border-[#ffffff10]" aria-labelledby="join-title">
   <div class="max-w-5xl mx-auto">
-    <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">Let's talk</h2>
-    <h3 class="text-4xl md:text-5xl font-medium text-[var(--white)] mb-6">
-      Contact
-    </h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="text-[var(--white-icon)]">
-        <p class="mb-4">
-          Have a question or a project in mind? Feel free to reach out.
-        </p>
-        <div class="flex items-center gap-2">
-          <span>Location:</span>
-          <span class="text-[var(--white)]">Your country</span>
-        </div>
-      </div>
+    <p class="section-kicker">COME BUILD WITH US</p>
+    <h2 id="join-title" class="section-title">加入我们 <span class="text-[var(--white-icon)]">/ 联系</span></h2>
+    <p class="section-intro">不论你是想开始探索，还是希望与我们共建，都欢迎找到适合你的入口。</p>
 
-      <div>
-        <form
-          id="contact-form"
-          action="https://formspree.io/f/YOUR_FORM_ID_HERE"
-          method="POST"
-          class="flex flex-col gap-4"
-        >
-          <input
-            type="text"
-            name="from_name"
-            placeholder="Name"
-            required
-            class="px-4 py-2 bg-[#1414149c] text-[var(--white)] border border-[var(--white-icon-tr)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--sec)]"
-          />
-          <input
-            type="email"
-            name="reply_to"
-            placeholder="Email"
-            required
-            class="px-4 py-2 bg-[#1414149c] text-[var(--white)] border border-[var(--white-icon-tr)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--sec)]"
-          />
-          <textarea
-            name="message"
-            placeholder="Message"
-            rows="6"
-            required
-            class="px-4 py-2 bg-[#1414149c] text-[var(--white)] border border-[var(--white-icon-tr)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--sec)] resize-none"
-          ></textarea>
-          <button
-            type="submit"
-            class="px-4 py-2 bg-[var(--white-icon-tr)] text-[var(--white)] rounded-lg opacity-60 transition-opacity border border-[var(--white-icon-tr)] hover:opacity-100 hover:bg-[var(--white-icon-tr)]"
-          >
-            Submit
-          </button>
-        </form>
-        <div
-          id="form-message"
-          class="hidden justify-center items-center mt-4 text-[var(--white)] text-lg"
-        >
-          ✅ Thank you for your message!
-        </div>
-      </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <article class="join-card">
+        <span class="join-label">01 · MEMBERSHIP</span>
+        <h3>普通成员报名</h3>
+        <p>欢迎对技术、研究与跨学科协作感兴趣的同学加入。</p>
+        <div class="contact-placeholder" aria-label="招新报名链接尚待补充">招新报名入口待补充</div>
+      </article>
+      <article class="join-card">
+        <span class="join-label">02 · PARTNERSHIP</span>
+        <h3>合作咨询</h3>
+        <p>欢迎高校社团、研究团队、技术社区与赛事伙伴联系交流。</p>
+        <div class="contact-placeholder" aria-label="合作咨询联系方式尚待补充">合作咨询通道待补充</div>
+      </article>
+    </div>
+    <div class="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-[var(--white-icon)]">
+      <span>QQ群：待补充</span><span>公众号：待补充</span>
     </div>
   </div>
 </section>
 
-<script type="module" is:inline>
-  const form = document.getElementById("contact-form");
-  const formMessage = document.getElementById("form-message");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch(form.action, {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-      });
-      if (response.ok) {
-        form.reset();
-        form.style.display = "none";
-        formMessage.classList.remove("hidden");
-      } else {
-        const data = await response.json();
-        console.error("Error response:", data);
-        alert("There was a problem sending your message.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("There was a problem sending your message.");
-    }
-  });
-</script>
+<style is:global>
+  .join-card { border: 1px solid var(--white-icon-tr); border-radius: 1.2rem; background: radial-gradient(ellipse at top right, #a476ff12, transparent 55%), #1414149c; padding: clamp(1.25rem, 4vw, 2rem); }
+  .join-label { color: var(--sec); font-size: 0.7rem; letter-spacing: 0.16em; }
+  .join-card h3 { color: var(--white); font-size: 1.5rem; font-weight: 500; margin-top: 1rem; }
+  .join-card p { color: var(--white-icon); line-height: 1.7; margin-top: 0.7rem; min-height: 3.4em; }
+  .contact-placeholder { display: flex; justify-content: center; align-items: center; min-height: 48px; margin-top: 1.5rem; border: 1px dashed #a476ff55; border-radius: 0.75rem; color: #d5c5ff; background: #a476ff0a; font-size: 0.9rem; }
+</style>

@@ -1,132 +1,106 @@
 ---
+const activities = [
+  { number: "01", title: "从入门到实践", text: "技术沙龙与 Workshop，面向零基础同学开展系统学习。" },
+  { number: "02", title: "项目底层拆解", text: "集体研读 DeFi 等标杆项目，理解协议机制与设计原理。" },
+  { number: "03", title: "链上投研与复盘", text: "围绕链上生态开展研究，产出研报、案例分析与复盘。" },
+  { number: "04", title: "论文研读与科研", text: "跟进前沿论文，围绕区块链与 AI-Agent 交叉方向探索课题。" },
+  { number: "05", title: "组队科创赛事", text: "常态化组队参与黑客松、AI-Agent 及其他科创赛事。" },
+  { number: "06", title: "连接开发者社群", text: "对接开发者社区，争取国内外赛事与技术交流机会。" },
+];
 
-interface Project {
-  title: string;
-  image: string;
-  link: string;
-  preview: string;
-  status: string;
-}
-
-const projects: Project[] = [
-  {
-    title: "Project One",
-    image: "https://placehold.co/600x400/1a1a1a/ffffff?text=Project+One",
-    link: "https://github.com",
-    preview: "https://example.com",
-    status: "Deployed",
-  },
-  {
-    title: "Project Two",
-    image: "https://placehold.co/600x400/1a1a1a/ffffff?text=Project+Two",
-    link: "https://github.com",
-    preview: "https://example.com",
-    status: "On Development",
-  },
-  {
-    title: "Project Three",
-    image: "https://placehold.co/600x400/1a1a1a/ffffff?text=Project+Three",
-    link: "https://github.com",
-    preview: "https://example.com",
-    status: "Contributor",
-  },
-  {
-    title: "Project Four",
-    image: "https://placehold.co/600x400/1a1a1a/ffffff?text=Project+Four",
-    link: "https://github.com",
-    preview: "https://example.com",
-    status: "Deployed",
-  },
+const roadmap = [
+  "搭建可传承的完整学习培养体系，持续沉淀资料库",
+  "深耕区块链 × AI-Agent 前沿交叉领域",
+  "稳定输出技术解析、研报与科研笔记",
+  "常态化备赛，冲击各类科创赛事",
+  "积极争取科创资助资源，支撑活动与对外交流",
+  "建立长效运转机制，保障社团可持续传承",
 ];
 ---
 
-<section
-  id="projects"
-  class="py-12 border-t border-[#ffffff10] text-[var(--white)]"
->
+<section id="activities" class="w-full py-14 md:py-20 border-t border-[#ffffff10]" aria-labelledby="activities-title">
   <div class="max-w-5xl mx-auto">
-    <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">My work</h2>
-    <h3 class="text-4xl md:text-5xl font-medium mb-8">Projects</h3>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {
-        projects.map((project) => (
-          <div class="group">
-            <a
-              href={project.preview}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="block"
-            >
-              <div class="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 mb-4">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  class="w-full h-48 md:h-72 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div class="flex items-center px-3">
-                <div class="flex-grow">
-                  <h4 class="text-2xl font-semibold">{project.title}</h4>
-                  <span class="py-1 text-sm text-[var(--white-icon)]">
-                    {project.status}
-                  </span>
-                </div>
-                <div class="flex gap-2 ml-auto">
-                  <a
-                    target="_blank"
-                    href={project.link}
-                    aria-label="GitHub"
-                    class="size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="size-7"
-                    >
-                      <path d="M24 12L18.3431 17.6569L16.9289 16.2426L21.1716 12L16.9289 7.75736L18.3431 6.34315L24 12ZM2.82843 12L7.07107 16.2426L5.65685 17.6569L0 12L5.65685 6.34315L7.07107 7.75736L2.82843 12ZM9.78845 21H7.66009L14.2116 3H16.3399L9.78845 21Z" />
-                    </svg>
-                  </a>
-                  <a
-                    target="_blank"
-                    href={project.preview}
-                    aria-label="Preview"
-                    class="size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="size-7"
-                    >
-                      <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </a>
-          </div>
-        ))
-      }
+    <p class="section-kicker">LEARN · RESEARCH · BUILD</p>
+    <h2 id="activities-title" class="section-title">我们在做什么</h2>
+    <p class="section-intro">从基础学习到真实项目，从研究讨论到赛事协作，让想法在实践中生长。</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+      {activities.map((activity) => (
+        <article class="info-card group">
+          <span class="text-xs tracking-[0.2em] text-[var(--sec)]">{activity.number}</span>
+          <h3 class="mt-5 text-xl font-semibold text-[var(--white)]">{activity.title}</h3>
+          <p class="mt-3 leading-relaxed text-[var(--white-icon)]">{activity.text}</p>
+          <span aria-hidden="true" class="mt-6 block h-px w-10 bg-[var(--sec)] transition-all group-hover:w-20"></span>
+        </article>
+      ))}
     </div>
-    <a
-      target="_blank"
-      href="https://github.com"
-      aria-label="GitHub"
-      class="w-full flex items-center justify-center gap-2 mt-9 text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] p-3 rounded-full bg-[#1414149c] hover:bg-[var(--white-icon-tr)] hover:scale-105"
-    >
-      <span class="md:text-lg text-md">More projects on</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        class="size-6"
-      >
-        <path
-          d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
-        ></path>
-      </svg>
-    </a>
   </div>
 </section>
+
+<section id="roadmap" class="w-full py-14 md:py-20 border-t border-[#ffffff10]" aria-labelledby="roadmap-title">
+  <div class="max-w-5xl mx-auto">
+    <p class="section-kicker">GROW WITH PURPOSE</p>
+    <h2 id="roadmap-title" class="section-title">发展规划</h2>
+    <p class="section-intro">把短期活动沉淀为长期能力，让社团建设能够持续、协作、可传承。</p>
+    <ol class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+      {roadmap.map((item, index) => (
+        <li class="roadmap-item">
+          <span class="roadmap-number">{String(index + 1).padStart(2, "0")}</span>
+          <span class="leading-relaxed text-[var(--white)]">{item}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style is:global>
+  .section-kicker {
+    color: var(--sec);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.65rem;
+  }
+  .section-title {
+    color: var(--white);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+  }
+  .section-intro {
+    color: var(--white-icon);
+    line-height: 1.8;
+    margin: 0.85rem 0 2rem;
+    max-width: 42rem;
+  }
+  .info-card {
+    background: linear-gradient(145deg, #171717, #111111);
+    border: 1px solid var(--white-icon-tr);
+    border-radius: 1.15rem;
+    min-height: 190px;
+    padding: 1.35rem;
+    transition: border-color 200ms ease, transform 200ms ease;
+  }
+  .info-card:hover {
+    border-color: #a476ff70;
+    transform: translateY(-3px);
+  }
+  .roadmap-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    border: 1px solid var(--white-icon-tr);
+    border-radius: 0.9rem;
+    background: #1414149c;
+    padding: 1.1rem;
+  }
+  .roadmap-number {
+    color: var(--sec);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    padding-top: 0.15rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .info-card { transition: none; }
+    .info-card:hover { transform: none; }
+  }
+</style>

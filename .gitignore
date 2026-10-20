@@ -22,3 +22,14 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local browser screenshots and sessions
+.playwright-cli/
+output/playwright/
+
+# local credentials and agent state
+.env.*
+!.env.example
+.codex/
+.aws/
+.agents/

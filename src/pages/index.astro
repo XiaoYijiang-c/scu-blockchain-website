@@ -3,14 +3,21 @@ import Layout from "@/layouts/Layout.astro";
 import Nav from "@/components/nav.astro";
 import Home from "@/components/home.astro";
 import Projects from "@/components/projects.astro";
+import Collaboration from "@/components/collaboration.astro";
+import Archive from "@/components/archive.astro";
 import Contact from "@/components/contact.astro";
 import Footer from "@/components/footer.astro";
 ---
 
-<Layout title="Your name">
+<Layout title="四川大学区块链协会">
+  <a class="skip-link" href="#main-content">跳转到主要内容</a>
   <Nav />
-  <Home />
-  <Projects />
-  <Contact />
+  <main id="main-content" tabindex="-1">
+    <Home />
+    <Projects />
+    <Collaboration />
+    <Archive />
+    <Contact />
+  </main>
   <Footer />
 </Layout>

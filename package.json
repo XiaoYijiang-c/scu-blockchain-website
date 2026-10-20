@@ -1,14 +1,15 @@
 {
-  "name": "portfolio",
+  "name": "scdu-blockchain-association",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@11.2.2",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "browser": "playwright-cli",
+    "browser:install": "playwright-cli install-browser chromium"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
@@ -19,6 +20,7 @@
     "@types/react-dom": "^19.3.0",
     "astro": "^7.3.2",
     "firebase": "^12.19.0",
+    "motion": "^14.4.0",
     "ogl": "^1.0.11",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
@@ -27,6 +29,7 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "@playwright/cli": "0.1.22",
     "@types/node": "^26.5.1",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^1.0.0"

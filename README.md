@@ -1,108 +1,79 @@
-# Dark minimal
-> Highly customizable and performant portfolio template built with Astro, React, and Tailwind CSS.
+# 四川大学区块链协会网站
 
-<img width="1920" height="1080" alt="astro-portfolio" src="https://github.com/user-attachments/assets/0df80067-5fe2-4c24-90c4-4eb28e1a7508" />
+基于 [Dark Minimal](https://github.com/Gothsec/dark-minimal) Astro 模板改造的学生科创社团介绍站，采用暗色简约视觉，适配桌面与移动端。页面介绍协会方向、活动、发展规划、合作倡议、联盟共建、学习资源与加入方式。
 
-![Deploy Status](https://img.shields.io/badge/Deploy-Vercel-black?style=flat&logo=vercel)
-[![Built with Astro](https://astro.badg.es/v2/built-with-astro/tiny.svg)](https://astro.build)
+> 本站为学生自建站点，仅作学术科创交流，不代表学校立场；所有分析仅用于教学，不构成投资建议，不鼓励加密资产交易。
 
----
+## 技术栈
 
-[Demo](https://darkminimal.vercel.app) | [Astro Themes](https://astro.build/themes/details/darkminimal/) | [ReactBits Showcase](https://www.reactbits.dev/showcase) 
+- Astro 7 静态站点
+- TypeScript、React（模板中的少量交互组件）、Tailwind CSS
+- Node.js 20 或更高版本
+- **npm**：仓库使用 `package-lock.json` 与 `.github/workflows/ci.yml` 中的 `npm ci`。
 
-## **Features**
-- **Blazing fast performance** powered by Astro
-- **Beautifully styled** with Tailwind CSS
-- **Spotify integration** for showcasing your favorite album
-- **Working contact form** powered by Formspree
-- **Interactive UI** including the `<LetterGlitch />` component from [ReactBits.dev](https://www.reactbits.dev/)
+## 本地开发
 
-## **Stack**  
-### **Frontend**  
-![Astro](https://img.shields.io/badge/Astro-FF5D01?logo=astro&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
-
-### **Tools**  
-![Figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=white)
-![Prettier](https://img.shields.io/badge/Prettier-F7B93E?logo=prettier&logoColor=black)
-![Canva](https://img.shields.io/badge/Canva-c900c3?logo=canva&logoColor=white)
-
-## **Configuration Guides**
-
-### **Show your favorite Spotify album (or your own)** ![Spotify](https://img.shields.io/badge/Spotify-06cc1a?logo=spotify&logoColor=white)
-1. Choose your Spotify album
-2. Access the share options
-3. Select 'copy embed code'
-```html
-<iframe src="https://open.spotify.com/embed/album/YOUR_ALBUM_ID_HERE" style="border-radius:12px border:0;" class="w-full h-40" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-```
-4. Insert the embed code on `src/Components/footer.astro`
-
-### **Set up contact form (Formspree)** ![Formspree](https://img.shields.io/badge/Formspree-E21A28?logo=formspree&logoColor=white)
-1. Create an account on [Formspree](https://formspree.io/)
-2. Create a new project/form and copy your form endpoint URL (it looks like `https://formspree.io/f/your_id`)
-3. Open the `src/Components/contact.astro` file
-4. Replace the `action` attribute in the `<form>` tag with your endpoint URL:
-```html
-<form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST">
-```
-
-## **Customization Checklist**
-Before deploying your own instance, make sure to update these placeholder values with your real information:
-- **`src/layouts/Layout.astro`**: Update `title`, `description`, `canonical` URL, `og` tags, and the JSON-LD schema with your own details.
-- **`src/components/home.astro`**: Change the greeting "Your Name" and update the GitHub, LinkedIn, and email URLs.
-- **`src/components/projects.astro`**: Replace the generic projects (Project One, etc.) with your own, including titles, descriptions and links.
-- **`src/components/footer.astro`**: Update the social links, change the Spotify iframe to your playlist, and update the copyright name.
-
-## **Customization**
-To make this portfolio your own, you can edit the following files:
-- **Global Settings:** Update metadata and title in `src/layouts/Layout.astro`.
-- **Content:** Modify the text, links, and details inside the components in `src/Components/` (e.g., `home.astro`, `projects.astro`, `contact.astro`).
-- **Styling:** The design uses Tailwind CSS. You can adjust the theme configuration in `tailwind.config.mjs` and custom styles if needed.
-
-## **Project structure**
-```text
-public/
-└── svg/
-src/
-├── Components/
-|    ├── contact.astro
-|    ├── footer.astro
-|    ├── home.astro
-|    ├── logoWall.astro
-|    ├── nav.astro
-|    └── projects.astro
-├── layouts/
-|    └── Layout.astro
-├── React/
-|    ├── LetterGlitch.tsx
-|    ├── LikeButton.tsx
-|    └── SkillsList.tsx
-└── pages/
-     └── index.astro
-```
-
-## **Local configuration** 
-
-### Prerequisites
-- **Node.js** (v18 or higher recommended)
-- **npm** or **pnpm**
-
-1. Clone the repo:  
 ```bash
-git clone https://github.com/Gothsec/dark-minimal
-```
-2. Install dependencies:
-```bash  
-npm install
-```
-3. Start the development server:
-```bash  
+npm ci
 npm run dev
 ```
 
-## **Deployment**
-This project is built with Astro and can be easily deployed to Vercel, Netlify, or GitHub Pages. For the easiest setup, push your repository to GitHub and import it directly into [Vercel](https://vercel.com/) or [Netlify](https://www.netlify.com/).
- 
-> This project is licensed under the [MIT License](https://opensource.org/licenses/mit). 
+开发服务器默认运行在 <http://localhost:4321>。构建并检查：
+
+```bash
+npm run build
+npm run preview
+```
+
+`npm run build` 会先执行 `astro check`，再生成 `dist/` 静态文件。
+
+## 内容维护
+
+| 内容 | 文件 |
+| --- | --- |
+| 首页介绍、社团定位与领域标签 | `src/components/home.astro` |
+| 活动方向、发展规划 | `src/components/projects.astro` |
+| 合作伙伴与高校联盟倡议 | `src/components/collaboration.astro` |
+| 活动回顾分类、学习资源分类 | `src/components/archive.astro` |
+| 招新、合作咨询入口 | `src/components/contact.astro` |
+| 锚点导航 | `src/components/nav.astro` |
+| 页脚免责声明与版权 | `src/components/footer.astro` |
+| 页面标题、元信息、全局设计变量 | `src/layouts/Layout.astro` |
+
+活动照片、真实活动记录、讲义/资源链接、报名表、QQ群、公众号和合作咨询方式目前尚未提供，页面以“待补充/整理中”标示。获得协会确认后再替换占位信息；联盟学校及社团当前为意向伙伴，不应改写成已确认合作。不要提交个人隐私或未获授权的图片、Logo、联系方式。
+
+## GitHub 与多设备协作
+
+协会私有仓库：https://github.com/XiaoYijiang-c/scu-blockchain-website
+
+新设备首次使用（需要有该私有仓库的访问权限）：
+
+```bash
+git clone https://github.com/XiaoYijiang-c/scu-blockchain-website.git
+cd scu-blockchain-website
+npm ci
+npm run browser:install
+npm run dev
+```
+
+每次开始修改前执行 `git pull --ff-only`；完成后提交并推送：
+
+```bash
+git add <本次修改的文件>
+git commit -m "描述本次修改"
+git push
+```
+
+多设备同时开发不同功能时，各自创建功能分支，通过 Pull Request 合入 `main`。切换设备前提交并推送，避免两端同时修改同一文件。依赖锁文件也需一起提交。
+
+`origin` 指向协会仓库；本机保留模板仓库为 `upstream`，请勿向模板仓库推送协会内容。新克隆默认只包含 `origin`。
+
+浏览器工具与配置通过 Git 同步，浏览器内核需在每台设备安装。详见 [视觉预览说明](docs/visual-preview.md)。Codex 用户级技能需在各设备单独安装；无需技能也可通过 npm 命令截图。
+
+## 部署
+
+项目使用 Astro `static` 输出。可在 Vercel、Netlify 或支持静态文件的托管平台部署，构建命令为 `npm run build`，输出目录为 `dist`。首次部署前需按平台确认 Node 版本（20+）。域名尚未确定，因此页面暂未设置虚构 canonical 地址。
+
+## 模板与许可
+
+本项目在 Dark Minimal 模板基础上修改。模板原有 MIT License（版权归 Oscar Hernandez）保存在 `LICENSE`；再分发时应保留许可证及原版权/许可声明。协会自有文案、图片等素材应由提供方确认其使用授权。模板演示内容和协会内容请以本项目现行文件为准。

@@ -1,0 +1,40 @@
+---
+const archiveTypes = ["招新", "主题讲座", "技术沙龙", "Workshop", "参赛纪实"];
+const resourceTypes = ["入门路线", "分享课件", "项目解析", "研究报告", "备赛资料", "论文清单"];
+---
+
+<section id="archive" class="w-full py-14 md:py-20 border-t border-[#ffffff10]" aria-labelledby="archive-title">
+  <div class="max-w-5xl mx-auto">
+    <p class="section-kicker">RECAP · DOCUMENT · REVISIT</p>
+    <h2 id="archive-title" class="section-title">活动回顾</h2>
+    <p class="section-intro">记录社团的学习、分享与实践。活动图文和讲义将逐步整理归档。</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      {archiveTypes.map((type, index) => (
+        <div class="archive-type"><span class="text-xs text-[var(--sec)]">0{index + 1}</span><span class="mt-3 font-medium text-[var(--white)]">{type}</span></div>
+      ))}
+    </div>
+    <div class="mt-5 rounded-xl border border-dashed border-[var(--white-icon-tr)] px-5 py-6 text-center text-sm text-[var(--white-icon)]" role="status">
+      活动存档正在整理中 · 后续将在此更新图文纪实与讲义下载
+    </div>
+  </div>
+</section>
+
+<section id="resources" class="w-full py-14 md:py-20 border-t border-[#ffffff10]" aria-labelledby="resources-title">
+  <div class="max-w-5xl mx-auto">
+    <p class="section-kicker">LEARNING RESOURCE CENTER</p>
+    <h2 id="resources-title" class="section-title">学习资源中心</h2>
+    <p class="section-intro">沉淀从入门学习到前沿研究、从项目理解到赛事准备的共享资料。</p>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+      {resourceTypes.map((type, index) => (
+        <div class="resource-card"><span class="resource-index">/{String(index + 1).padStart(2, "0")}</span><span class="text-[var(--white)]">{type}</span><span class="ml-auto text-[var(--white-icon)]" aria-hidden="true">↗</span></div>
+      ))}
+    </div>
+    <p class="mt-5 text-center text-xs text-[var(--white-icon)]">资料库内容持续建设中，公开资料与下载入口将在整理完成后补充。</p>
+  </div>
+</section>
+
+<style is:global>
+  .archive-type { min-height: 112px; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--white-icon-tr); border-radius: 0.9rem; background: #1414149c; padding: 1rem; }
+  .resource-card { display: flex; align-items: center; gap: 0.8rem; min-height: 64px; border: 1px solid var(--white-icon-tr); border-radius: 0.8rem; background: #1414149c; padding: 0.85rem; font-size: 0.875rem; }
+  .resource-index { color: var(--sec); font-size: 0.7rem; letter-spacing: 0.08em; }
+</style>
