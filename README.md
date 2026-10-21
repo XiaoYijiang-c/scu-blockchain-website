@@ -27,7 +27,13 @@ npm run preview
 
 `npm run build` 会先执行 `astro check`，再生成 `dist/` 静态文件。
 
+## 开发原则
+
+优先复用已有组件、样式与依赖；重复展示结构逐步抽成公共组件。开发前请阅读 [AGENTS.md](AGENTS.md) 和 [项目维护说明](docs/plan.md)。
+
 ## 内容维护
+
+主题配色统一在 [`src/styles/theme.css`](src/styles/theme.css) 配置；修改顶部基础色即可同步按钮、渐变、卡片与徽章。色卡、参考来源和调整方式见 [配色说明](docs/theme.md)。
 
 | 内容 | 文件 |
 | --- | --- |

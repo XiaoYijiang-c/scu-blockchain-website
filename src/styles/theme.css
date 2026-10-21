@@ -1,0 +1,60 @@
+/* 全站配色配置：优先修改这一组基础颜色，下面的色阶会自动派生。
+ * Electric Violet / Cyan — inspired by Radix Colors' semantic scale.
+ * 维护说明与配色参考：docs/theme.md
+ */
+:root {
+  --theme-primary: #8b5cf6;
+  --theme-secondary: #22d3ee;
+  --theme-accent: #f472b6;
+  --theme-background: #080b16;
+  --theme-surface: #11182b;
+  --theme-text: #f1f5ff;
+  --theme-muted: #a8b3cf;
+
+  /* Logo 的识别色独立于界面强调色。 */
+  --logo-red: #b52d3b;
+  --logo-white: #f3f0e7;
+
+  /* 派生色阶：透明度与状态色统一从基础色生成。 */
+  --primary-soft: color-mix(in srgb, var(--theme-primary), var(--theme-text) 35%);
+  --primary-deep: color-mix(in srgb, var(--theme-primary) 32%, var(--theme-background));
+  --primary-wash: color-mix(in srgb, var(--theme-primary) 12%, transparent);
+  --primary-glow: color-mix(in srgb, var(--theme-primary) 28%, transparent);
+  --secondary-wash: color-mix(in srgb, var(--theme-secondary) 10%, transparent);
+  --secondary-glow: color-mix(in srgb, var(--theme-secondary) 24%, transparent);
+  --accent-wash: color-mix(in srgb, var(--theme-accent) 9%, transparent);
+  --surface-raised: color-mix(in srgb, var(--theme-surface), var(--theme-primary) 9%);
+  --border-subtle: color-mix(in srgb, var(--theme-muted) 13%, transparent);
+  --border-hover: color-mix(in srgb, var(--theme-secondary) 45%, transparent);
+  --text-subtle: color-mix(in srgb, var(--theme-muted) 85%, var(--theme-background));
+
+  /* shadcn / Magic UI 与已有页面统一使用这些语义变量。 */
+  --background: var(--theme-background);
+  --foreground: var(--theme-text);
+  --card: var(--theme-surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: var(--theme-primary);
+  --primary-foreground: var(--theme-background);
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--foreground);
+  --accent: var(--secondary-wash);
+  --accent-foreground: var(--theme-secondary);
+  --muted: var(--surface-raised);
+  --muted-foreground: var(--theme-muted);
+  --border: var(--border-subtle);
+  --input: var(--border);
+  --ring: var(--theme-secondary);
+  --component-bg: var(--card);
+  --sec: var(--primary-soft);
+  --white: var(--foreground);
+  --white-icon: var(--muted-foreground);
+  --white-icon-tr: var(--border-subtle);
+
+  --hero-gradient: linear-gradient(110deg, var(--primary-soft) 5%, var(--theme-secondary) 65%, var(--theme-text) 100%);
+  --button-gradient: linear-gradient(115deg, var(--primary-soft), var(--theme-secondary));
+  --card-gradient: linear-gradient(145deg, var(--surface-raised), var(--card) 75%);
+  --nav-background: color-mix(in srgb, var(--theme-surface) 82%, transparent);
+  --nav-scrolling-background: color-mix(in srgb, var(--theme-surface) 95%, transparent);
+}

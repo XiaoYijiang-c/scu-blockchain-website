@@ -1,4 +1,7 @@
 ---
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import NetworkVisual from "@/components/NetworkVisual.astro";
+
 const contributions = [
   "跨学科青年科创人才",
   "技术与投研科普内容产出",
@@ -9,33 +12,41 @@ const contributions = [
 const partners = ["高校科创社团", "科研机构", "技术团队", "科创平台", "赛事主办方", "技术社群"];
 ---
 
-<section id="partnership" class="w-full py-14 md:py-20 border-t border-[#ffffff10]" aria-labelledby="partnership-title">
+<section id="partnership" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="partnership-title">
   <div class="max-w-5xl mx-auto">
     <p class="section-kicker">BUILD TOGETHER</p>
     <h2 id="partnership-title" class="section-title">寻求合作 <span class="text-[var(--white-icon)]">/ 共建伙伴</span></h2>
     <p class="section-intro">期待与高校、科研机构和技术社区携手，让跨学科想法连接真实问题与实践机会。</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <article class="partner-panel">
+      <Card className="partner-panel" data-pointer-tilt="card">
+        <CardHeader className="p-0">
         <p class="text-sm tracking-[0.12em] text-[var(--sec)]">WHAT WE BRING</p>
-        <h3 class="mt-3 text-2xl font-medium text-[var(--white)]">我方可提供</h3>
-        <ul class="mt-6 space-y-3">
+        <CardTitle className="mt-3 text-2xl font-medium text-[var(--white)]">我方可提供</CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+        <ul class="mt-6 flex flex-col gap-3">
           {contributions.map((item) => <li class="partner-row"><span class="partner-check" aria-hidden="true">↗</span>{item}</li>)}
         </ul>
-      </article>
-      <article class="partner-panel partner-panel-accent">
+        </CardContent>
+      </Card>
+      <Card className="partner-panel partner-panel-accent" data-pointer-tilt="card">
+        <CardHeader className="p-0">
         <p class="text-sm tracking-[0.12em] text-[var(--sec)]">WHO WE HOPE TO MEET</p>
-        <h3 class="mt-3 text-2xl font-medium text-[var(--white)]">期望合作方</h3>
+        <CardTitle className="mt-3 text-2xl font-medium text-[var(--white)]">期望合作方</CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
         <ul class="mt-6 flex flex-wrap gap-2">
           {partners.map((item) => <li class="partner-tag">{item}</li>)}
         </ul>
         <p class="mt-8 text-sm leading-relaxed text-[var(--white-icon)]">联合分享、科研探索、赛事备战与校园活动，都欢迎交流共建。</p>
-      </article>
+        </CardContent>
+      </Card>
     </div>
   </div>
 </section>
 
-<section id="alliance" class="w-full py-14 md:py-20 border-t border-[#ffffff10]" aria-labelledby="alliance-title">
+<section id="alliance" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="alliance-title">
   <div class="max-w-5xl mx-auto">
     <p class="section-kicker">SOUTHWEST UNIVERSITY NETWORK</p>
     <div class="alliance-panel">
@@ -46,7 +57,7 @@ const partners = ["高校科创社团", "科研机构", "技术团队", "科创�
         <p class="mt-6 text-sm text-[var(--white-icon)]">意向伙伴：电子科技大学、成都信息工程大学及川内各高校相关科创社团</p>
         <p class="mt-2 text-xs text-[var(--white-icon)]/70">以上为共建意向，不代表相关学校或社团已确认加入。</p>
       </div>
-      <div class="alliance-mark" aria-hidden="true"><span>SW</span><i></i><b>BLOCKCHAIN</b></div>
+      <div class="alliance-network" aria-hidden="true"><NetworkVisual /></div>
     </div>
   </div>
 </section>
@@ -55,10 +66,10 @@ const partners = ["高校科创社团", "科研机构", "技术团队", "科创�
   .partner-panel {
     border: 1px solid var(--white-icon-tr);
     border-radius: 1.2rem;
-    background: #1414149c;
+    background: color-mix(in srgb, var(--card) 61.2%, transparent);
     padding: clamp(1.25rem, 4vw, 2rem);
   }
-  .partner-panel-accent { background: radial-gradient(ellipse at top right, #a476ff14, transparent 60%), #1414149c; }
+  .partner-panel-accent { background: radial-gradient(ellipse at top right, color-mix(in srgb, var(--theme-primary) 7.8%, transparent), transparent 60%), color-mix(in srgb, var(--card) 61.2%, transparent); }
   .partner-row { display: flex; align-items: flex-start; gap: 0.8rem; color: var(--white-icon); line-height: 1.6; }
   .partner-check { color: var(--sec); }
   .partner-tag { border: 1px solid var(--white-icon-tr); border-radius: 999px; padding: 0.55rem 0.85rem; color: var(--white-icon); font-size: 0.875rem; }
@@ -68,16 +79,13 @@ const partners = ["高校科创社团", "科研机构", "技术团队", "科创�
     min-height: 320px;
     display: flex;
     align-items: center;
-    border: 1px solid #a476ff40;
+    border: 1px solid color-mix(in srgb, var(--theme-primary) 25.1%, transparent);
     border-radius: 1.5rem;
     padding: clamp(1.5rem, 5vw, 3rem);
-    background: radial-gradient(ellipse at 85% 50%, #a476ff20, transparent 38%), linear-gradient(135deg, #17151d, #111);
+    background: radial-gradient(ellipse at 85% 50%, color-mix(in srgb, var(--theme-primary) 12.5%, transparent), transparent 38%), linear-gradient(135deg, var(--surface-raised), var(--card));
   }
-  .alliance-mark { position: absolute; right: 4%; top: 50%; width: clamp(9rem, 25vw, 18rem); height: clamp(9rem, 25vw, 18rem); border: 1px solid #a476ff50; border-radius: 50%; display: grid; place-content: center; text-align: center; color: #a476ff80; transform: translateY(-50%); font-weight: 600; letter-spacing: 0.2em; }
-  .alliance-mark::before, .alliance-mark::after { content: ""; position: absolute; inset: 12%; border: 1px solid #a476ff30; border-radius: 50%; }
-  .alliance-mark::after { inset: 25%; }
-  .alliance-mark span { font-size: clamp(2rem, 5vw, 4rem); }
-  .alliance-mark i { height: 1px; width: 3rem; margin: 0.25rem auto; background: #a476ff80; }
-  .alliance-mark b { font-size: 0.6rem; }
-  @media (max-width: 767px) { .alliance-mark { opacity: 0.18; right: -8%; } }
+  .alliance-network { position: absolute; right: 2%; top: 50%; width: 34%; transform: translateY(-50%); opacity: 0.62; }
+  .alliance-network .network-scene { width: 100%; }
+  .alliance-network .network-label { display: none; }
+  @media (max-width: 767px) { .alliance-network { opacity: 0.16; right: -5%; width: 48%; } }
 </style>

@@ -1,5 +1,9 @@
 ---
+import "../styles/globals.css";
+import "@fontsource-variable/space-grotesk";
+import "@fontsource-variable/noto-sans-sc";
 import "../styles/design.css";
+import "../styles/viewport.css";
 
 interface Props {
   title: string;
@@ -12,13 +16,13 @@ const description =
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="dark">
   <head>
     <meta charset="UTF-8" />
     <title>{title === siteName ? title : `${title} | ${siteName}`}</title>
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#101010" />
+    <meta name="theme-color" content="" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta property="og:title" content={`${title} | ${siteName}`} />
     <meta property="og:description" content={description} />
@@ -40,27 +44,16 @@ const description =
     <slot />
     <script>
       import "../scripts/motion";
+      document.querySelector('meta[name="theme-color"]')?.setAttribute(
+        "content",
+        getComputedStyle(document.documentElement).getPropertyValue("--background").trim(),
+      );
     </script>
   </body>
 </html>
 
 <style is:global>
-  @font-face {
-    font-family: "Montserrat Variable";
-    src: url("/fonts/montserrat-latin-wght-normal.woff2")
-      format("woff2-variations");
-    font-weight: 100 900;
-    font-style: normal;
-    font-display: swap;
-  }
-
   :root {
-    --background: #09090d;
-    --component-bg: #171717ef;
-    --sec: #b69aff;
-    --white: #f0eff5;
-    --white-icon: #a4a3b3;
-    --white-icon-tr: #f3f3f310;
     color-scheme: dark;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
@@ -73,7 +66,8 @@ const description =
   }
   * {
     font-family:
-      "Montserrat Variable",
+      "Space Grotesk Variable",
+      "Noto Sans SC Variable",
       "PingFang SC",
       "Microsoft YaHei",
       "Noto Sans CJK SC",
@@ -109,7 +103,7 @@ const description =
     border-radius: 0.5rem;
     padding: 0.75rem 1rem;
     background: var(--sec);
-    color: #15111f;
+    color: var(--background);
     font-weight: 600;
   }
   .skip-link:focus {
@@ -126,7 +120,7 @@ const description =
     background: var(--background);
   }
   ::-webkit-scrollbar-thumb {
-    background: #39313f;
+    background: var(--primary-deep);
     border: 2px solid var(--background);
     border-radius: 20px;
   }
@@ -135,7 +129,7 @@ const description =
   }
   * {
     scrollbar-width: thin;
-    scrollbar-color: #39313f var(--background);
+    scrollbar-color: var(--primary-deep) var(--background);
   }
 
   @media (prefers-reduced-motion: reduce) {

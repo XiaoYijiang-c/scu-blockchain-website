@@ -1,4 +1,5 @@
 ---
+import badgeSvg from "../../public/logo/0xwe-badge.svg?raw";
 const directions = ["区块链", "智能合约", "Web3", "AI-Agent"];
 ---
 
@@ -30,42 +31,9 @@ const directions = ["区块链", "智能合约", "Web3", "AI-Agent"];
         STUDENT-LED. CURIOSITY-DRIVEN.
       </p>
     </div>
-    <div
-      class="hero-art"
-      role="img"
-      aria-label="连接区块链与人工智能的轨道节点图形"
-    >
-      <div class="art-cross art-cross-a" aria-hidden="true">
-        +
-      </div>
-      <div class="art-cross art-cross-b" aria-hidden="true">
-        +
-      </div>
-      <div class="art-coordinate" aria-hidden="true">
-        SCU / CONNECTED IDEAS
-      </div>
-      <div class="orbital-scene" aria-hidden="true">
-        <div class="orbital-halo"></div>
-        <div class="orbital-ring ring-one">
-          <i></i>
-        </div>
-        <div class="orbital-ring ring-two">
-          <i></i>
-        </div>
-        <div class="orbital-ring ring-three">
-          <i></i>
-        </div>
-        <div class="orbital-core">
-          <span>WEB3</span>
-          <b>×</b>
-          <span>AI</span>
-        </div>
-        <span class="orbital-label label-one">BLOCKCHAIN</span>
-        <span class="orbital-label label-two">INTELLIGENCE</span>
-      </div>
-      <div class="art-footer" aria-hidden="true">
-        <span class="status-dot"></span> LEARN · BUILD · SHARE{" "}
-        <span>01 — ∞</span>
+    <div class="hero-art">
+      <div class="badge-stage" data-pointer-tilt="badge" role="group" tabindex="0" aria-label="可交互的区块链协会 3D 徽章。移动鼠标调整角度，按住拖动旋转，也可使用方向键。">
+        <div class="badge-medallion" role="img" aria-label="四川大学区块链协会 0xWE 徽章" set:html={badgeSvg} />
       </div>
     </div>
   </div>

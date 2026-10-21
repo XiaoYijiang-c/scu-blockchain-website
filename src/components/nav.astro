@@ -69,7 +69,6 @@ const navItems: NavItem[] = [
 
 <style>
   nav {
-    transform: translateX(-50%);
     background-color: var(--background);
     transition:
       background-color 0.3s ease,
@@ -79,7 +78,7 @@ const navItems: NavItem[] = [
 
   nav.scrolling {
     background-color: var(--component-bg);
-    border-color: #ffffff10;
+    border-color: var(--border-subtle);
     border-radius: 9999px;
   }
 
@@ -98,7 +97,7 @@ const navItems: NavItem[] = [
       bottom: 0;
       left: 50%;
       border-radius: 1rem 1rem 0 0;
-      border-color: #ffffff10;
+      border-color: var(--border-subtle);
       padding-bottom: env(safe-area-inset-bottom);
     }
 
@@ -115,75 +114,68 @@ const navItems: NavItem[] = [
 
 <script>
   const nav = document.getElementById("main-nav");
-  let rafId: number | null = null;
-  const motionPreference = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  );
-
-  function updateNav() {
-    nav?.classList.toggle("scrolling", window.scrollY > 0);
-    rafId = null;
+  const links = [
+    ...document.querySelectorAll<HTMLAnchorElement>('#main-nav a[href^="#"]'),
+  ];
+  const sections = [
+    ...document.querySelectorAll<HTMLElement>("main section[id]"),
+  ];
+  const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const sectionNav: Record<string, string> = {
+    partnership: "alliance",
+    archive: "activities",
+    resources: "activities",
+  };
+  let frame = 0;
+  function update() {
+    frame = 0;
+    nav?.classList.toggle("scrolling", window.scrollY > 8);
+    // A stable reading line works for both full-screen and taller sections.
+    const readingLine = Math.min(window.innerHeight * 0.3, 200);
+    let current = sections[0];
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top <= readingLine) current = section;
+    }
+    if (!current) return;
+    const id = sectionNav[current.id] || current.id;
+    links.forEach((link) => {
+      const active = link.hash === `#${id}`;
+      link.classList.toggle("active", active);
+      if (active) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
   }
-
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!rafId) rafId = requestAnimationFrame(updateNav);
-    },
-    { passive: true },
-  );
-
+  function scheduleUpdate() {
+    if (!frame) frame = requestAnimationFrame(update);
+  }
+  window.addEventListener("scroll", scheduleUpdate, { passive: true });
+  window.addEventListener("resize", scheduleUpdate);
   document
-    .querySelectorAll<HTMLAnchorElement>('#main-nav a[href^="#"]')
+    .querySelectorAll<HTMLAnchorElement>('a[href^="#"]')
     .forEach((anchor) => {
       anchor.addEventListener("click", (event) => {
-        const targetId = anchor.getAttribute("href")?.slice(1);
-        const targetElement = targetId
-          ? document.getElementById(targetId)
-          : null;
-        if (!targetElement) return;
+        if (
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        )
+          return;
+        const target = document.getElementById(anchor.hash.slice(1));
+        if (!target) return;
         event.preventDefault();
-        targetElement.scrollIntoView({
-          behavior: motionPreference.matches ? "auto" : "smooth",
+        if (location.hash !== anchor.hash)
+          history.pushState(null, "", anchor.hash);
+        // Keep keyboard navigation at the destination without a second scroll.
+        if (!target.hasAttribute("tabindex"))
+          target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({
+          behavior: preference.matches ? "instant" : "smooth",
+          block: "start",
         });
-        history.replaceState(null, "", `#${targetId}`);
       });
     });
-
-  const sections = document.querySelectorAll<HTMLElement>("main section[id]");
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>(
-    '#main-nav a[href^="#"]',
-  );
-  updateNav();
-  const initialSection = location.hash || "#home";
-  navLinks.forEach((link) => {
-    const active = link.hash === initialSection;
-    link.classList.toggle("active", active);
-    if (active) link.setAttribute("aria-current", "location");
-    else link.removeAttribute("aria-current");
-  });
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          navLinks.forEach((link) => {
-            const sectionNav: Record<string, string> = {
-              partnership: "#alliance",
-              archive: "#activities",
-              resources: "#activities",
-            };
-            const active =
-              link.hash ===
-              (sectionNav[entry.target.id] || `#${entry.target.id}`);
-            link.classList.toggle("active", active);
-            if (active) link.setAttribute("aria-current", "location");
-            else link.removeAttribute("aria-current");
-          });
-        });
-      },
-      { rootMargin: "-25% 0px -55% 0px", threshold: 0 },
-    );
-    sections.forEach((section) => observer.observe(section));
-  }
+  update();
 </script>

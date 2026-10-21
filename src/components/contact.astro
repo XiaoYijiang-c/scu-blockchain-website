@@ -1,22 +1,34 @@
-<section id="join" class="w-full py-14 md:py-20 border-t border-[#ffffff10]" aria-labelledby="join-title">
+---
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+---
+
+<section id="join" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="join-title">
   <div class="max-w-5xl mx-auto">
     <p class="section-kicker">COME BUILD WITH US</p>
     <h2 id="join-title" class="section-title">加入我们 <span class="text-[var(--white-icon)]">/ 联系</span></h2>
     <p class="section-intro">不论你是想开始探索，还是希望与我们共建，都欢迎找到适合你的入口。</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <article class="join-card">
+      <Card className="join-card" data-pointer-tilt="card">
+        <CardHeader className="p-0">
         <span class="join-label">01 · MEMBERSHIP</span>
-        <h3>普通成员报名</h3>
-        <p>欢迎对技术、研究与跨学科协作感兴趣的同学加入。</p>
+        <CardTitle className="join-title">普通成员报名</CardTitle>
+        <p class="join-description">欢迎对技术、研究与跨学科协作感兴趣的同学加入。</p>
+        </CardHeader>
+        <CardContent className="p-0">
         <div class="contact-placeholder" aria-label="招新报名链接尚待补充">招新报名入口待补充</div>
-      </article>
-      <article class="join-card">
+        </CardContent>
+      </Card>
+      <Card className="join-card" data-pointer-tilt="card">
+        <CardHeader className="p-0">
         <span class="join-label">02 · PARTNERSHIP</span>
-        <h3>合作咨询</h3>
-        <p>欢迎高校社团、研究团队、技术社区与赛事伙伴联系交流。</p>
+        <CardTitle className="join-title">合作咨询</CardTitle>
+        <p class="join-description">欢迎高校社团、研究团队、技术社区与赛事伙伴联系交流。</p>
+        </CardHeader>
+        <CardContent className="p-0">
         <div class="contact-placeholder" aria-label="合作咨询联系方式尚待补充">合作咨询通道待补充</div>
-      </article>
+        </CardContent>
+      </Card>
     </div>
     <div class="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-[var(--white-icon)]">
       <span>QQ群：待补充</span><span>公众号：待补充</span>
@@ -25,9 +37,9 @@
 </section>
 
 <style is:global>
-  .join-card { border: 1px solid var(--white-icon-tr); border-radius: 1.2rem; background: radial-gradient(ellipse at top right, #a476ff12, transparent 55%), #1414149c; padding: clamp(1.25rem, 4vw, 2rem); }
+  .join-card { border: 1px solid var(--white-icon-tr); border-radius: 1.2rem; background: radial-gradient(ellipse at top right, color-mix(in srgb, var(--theme-primary) 7.1%, transparent), transparent 55%), color-mix(in srgb, var(--card) 61.2%, transparent); padding: clamp(1.25rem, 4vw, 2rem); }
   .join-label { color: var(--sec); font-size: 0.7rem; letter-spacing: 0.16em; }
-  .join-card h3 { color: var(--white); font-size: 1.5rem; font-weight: 500; margin-top: 1rem; }
-  .join-card p { color: var(--white-icon); line-height: 1.7; margin-top: 0.7rem; min-height: 3.4em; }
-  .contact-placeholder { display: flex; justify-content: center; align-items: center; min-height: 48px; margin-top: 1.5rem; border: 1px dashed #a476ff55; border-radius: 0.75rem; color: #d5c5ff; background: #a476ff0a; font-size: 0.9rem; }
+  .join-title { color: var(--white); font-size: 1.5rem; font-weight: 500; margin-top: 1rem; }
+  .join-description { color: var(--white-icon); line-height: 1.7; margin-top: 0.7rem; min-height: 3.4em; }
+  .contact-placeholder { display: flex; justify-content: center; align-items: center; min-height: 48px; margin-top: 1.5rem; border: 1px dashed color-mix(in srgb, var(--theme-primary) 33.3%, transparent); border-radius: 0.75rem; color: var(--primary-soft); background: color-mix(in srgb, var(--theme-primary) 3.9%, transparent); font-size: 0.9rem; }
 </style>

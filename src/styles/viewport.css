@@ -1,0 +1,267 @@
+/* Document-level snapping preserves native wheel, touch and keyboard scrolling. */
+html:root {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 0;
+}
+main section[id] {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+  scroll-margin-top: 0;
+}
+main section[id]:not(.hero) {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: max(112px, 10vh);
+  padding-bottom: 64px;
+}
+main section[id] > .max-w-5xl {
+  width: 100%;
+}
+main .hero {
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding-top: 112px;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+main .hero-inner {
+  flex: 1;
+  padding-top: 16px;
+  padding-bottom: 24px;
+  opacity: var(--exit-opacity, 1);
+  transform: translateY(var(--exit-y, 0px));
+}
+main .hero .direction-strip {
+  flex-shrink: 0;
+}
+body > footer {
+  scroll-snap-align: end;
+}
+@media (min-width: 768px) and (max-height: 800px) {
+  main .hero {
+    padding-top: 100px;
+    gap: 6px;
+    padding-bottom: 6px;
+  }
+  main .hero-inner {
+    padding-top: 0;
+    padding-bottom: 10px;
+  }
+  main .hero h1 {
+    font-size: clamp(48px, 5vw, 64px);
+  }
+  main .hero-art {
+    height: 340px;
+  }
+  main .hero-eyebrow {
+    margin-bottom: 18px;
+  }
+  main .hero-description {
+    margin-top: 20px;
+  }
+  main .hero-actions {
+    margin-top: 22px;
+  }
+  main .hero-caption {
+    margin-top: 20px;
+  }
+  main .direction-strip {
+    padding-block: 18px;
+  }
+}
+@media (max-width: 767px) {
+  html:root {
+    scroll-snap-type: y proximity;
+  }
+  main .hero {
+    padding-top: max(24px, env(safe-area-inset-top));
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    gap: 6px;
+  }
+  main .hero-inner {
+    gap: 6px;
+    padding: 0;
+    align-content: center;
+  }
+  main .hero-eyebrow {
+    margin-bottom: 18px;
+  }
+  main .hero h1 {
+    font-size: clamp(42px, 10vw, 64px);
+  }
+  main .hero-description {
+    margin-top: 18px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  main .hero-actions {
+    margin-top: 20px;
+  }
+  main .hero-caption {
+    display: none;
+  }
+  main .hero-art {
+    height: clamp(220px, 30svh, 280px);
+  }
+  main .badge-medallion { width: min(54vw, 260px); }
+  main .direction-strip {
+    padding-block: 12px;
+    gap: 0;
+  }
+  main .direction-caption {
+    display: none;
+  }
+  main .direction-item {
+    gap: 4px;
+  }
+  main section[id]:not(.hero) {
+    padding-top: 40px;
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:root {
+    scroll-snap-type: none;
+  }
+  main .hero-inner {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Scale the composition with the viewport, including ultrawide displays. */
+html body[class] {
+  padding-inline: clamp(20px, 5vw, 240px);
+}
+body main {
+  max-width: none;
+}
+main section[id] > .max-w-5xl {
+  max-width: none;
+}
+main .hero-grid {
+  inset-inline: 0;
+}
+@media (min-width: 1024px) {
+  main .hero {
+    padding-top: clamp(112px, 7.8vw, 280px);
+  }
+  main .hero-inner {
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(32px, 5vw, 190px);
+    padding-inline: 0;
+  }
+  main .hero h1 {
+    font-size: clamp(64px, 5.7vw, 220px);
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+  }
+  main .hero-eyebrow {
+    font-size: clamp(13px, 0.88vw, 30px);
+    margin-bottom: clamp(24px, 2vw, 64px);
+  }
+  main .hero-description {
+    font-size: clamp(15px, 1.06vw, 32px);
+    max-width: 32em;
+    margin-top: clamp(24px, 2vw, 68px);
+  }
+  main .hero-actions {
+    gap: clamp(12px, 1vw, 32px);
+    margin-top: clamp(28px, 2.4vw, 80px);
+  }
+  main .button-primary,
+  main .button-secondary {
+    font-size: clamp(14px, 0.95vw, 28px);
+    padding: 0.9em 1.5em;
+    gap: 1.8em;
+    border-radius: 0.6em;
+  }
+  main .hero-caption {
+    font-size: clamp(9px, 0.64vw, 19px);
+    margin-top: clamp(26px, 2vw, 64px);
+  }
+  main .hero-art {
+    height: clamp(400px, 31vw, 1120px);
+  }
+  main .art-coordinate,
+  main .art-footer {
+    font-size: clamp(9px, 0.62vw, 20px);
+  }
+  main .direction-strip {
+    padding: clamp(20px, 1.8vw, 54px) 0;
+  }
+  main .direction-item {
+    font-size: clamp(14px, 1vw, 30px);
+  }
+  main .direction-item > span,
+  main .direction-caption {
+    font-size: clamp(10px, 0.75vw, 22px);
+  }
+  #main-nav {
+    width: clamp(680px, 48vw, 1560px);
+    top: clamp(20px, 1.4vw, 48px);
+  }
+  #main-nav a {
+    font-size: clamp(13px, 0.9vw, 26px);
+    padding: 0.7em 1em;
+  }
+  main .section-title {
+    font-size: clamp(38px, 3vw, 100px);
+  }
+  main .section-kicker {
+    font-size: clamp(10px, 0.75vw, 22px);
+  }
+  main .section-intro {
+    max-width: 42em;
+    font-size: clamp(15px, 1.05vw, 28px);
+  }
+  main .info-card,
+  main .partner-panel,
+  main .join-card {
+    padding: clamp(28px, 2.3vw, 76px);
+  }
+  main .info-card h3,
+  main .join-card h3 {
+    font-size: clamp(20px, 1.5vw, 44px);
+  }
+  main .info-card p,
+  main .partner-row,
+  main .roadmap-item,
+  main .join-card p {
+    font-size: clamp(14px, 1vw, 28px);
+  }
+  main .info-card {
+    min-height: clamp(226px, 16vw, 530px);
+  }
+  main .info-card p {
+    max-width: 32em;
+  }
+  main #join .grid {
+    max-width: min(100%, 1800px);
+  }
+}
+@media (max-width: 767px) {
+  main .hero h1 {
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Compact phones retain a full viewport without an extra scroll prompt. */
+@media (max-width: 767px) and (max-height: 700px) {
+  main .hero { padding-top: 16px; gap: 4px; }
+  main .hero h1 { font-size: clamp(32px, 9vw, 42px); }
+  main .hero-eyebrow { font-size: 11px; margin-bottom: 10px; }
+  main .hero-description { font-size: 12px; line-height: 1.65; margin-top: 12px; }
+  main .hero-actions { margin-top: 14px; gap: 8px; }
+  main .button-primary, main .button-secondary { min-height: 44px; padding: 10px 16px; font-size: 12px; gap: 16px; }
+  main .hero-art { height: 128px; }
+  main .badge-medallion { width: min(42vw, 180px); }
+  main .network-label { display: none; }
+  main .direction-strip { padding-block: 8px; }
+}

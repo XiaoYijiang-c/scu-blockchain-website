@@ -1,0 +1,92 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+      <div class:list={["network-scene", className]} aria-hidden="true">
+        <div class="network-label network-label-top"><span>SCU / PROTOCOL LAB</span><b>DECENTRALIZED SYSTEMS</b></div>
+        <svg class="network-visual" viewBox="0 0 720 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="network-aura" cx="0" cy="0" r="1" gradientTransform="matrix(0 242 -288 0 360 264)" gradientUnits="userSpaceOnUse">
+              <stop stop-opacity=".22" style="stop-color:var(--theme-primary)" />
+              <stop offset=".62" stop-opacity=".08" style="stop-color:var(--theme-primary)" />
+              <stop offset="1" stop-opacity="0" style="stop-color:var(--background)" />
+            </radialGradient>
+            <linearGradient id="network-line" x1="122" y1="100" x2="598" y2="428" gradientUnits="userSpaceOnUse">
+              <stop stop-opacity=".12" style="stop-color:var(--theme-primary)" />
+              <stop offset=".52" stop-opacity=".8" style="stop-color:var(--primary-soft)" />
+              <stop offset="1" stop-opacity=".12" style="stop-color:var(--theme-primary)" />
+            </linearGradient>
+            <linearGradient id="cube-top" x1="0" y1="0" x2="1" y2="1">
+              <stop stop-opacity=".34" style="stop-color:var(--primary-soft)" />
+              <stop offset="1" stop-opacity=".1" style="stop-color:var(--theme-primary)" />
+            </linearGradient>
+            <linearGradient id="cube-side" x1="0" y1="0" x2="1" y2="1">
+              <stop stop-opacity=".2" style="stop-color:var(--theme-primary)" />
+              <stop offset="1" stop-opacity=".42" style="stop-color:var(--card)" />
+            </linearGradient>
+            <filter id="node-glow" x="-200%" y="-200%" width="500%" height="500%">
+              <feGaussianBlur stdDeviation="7" result="blur" />
+              <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+            <pattern id="network-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="1" fill-opacity=".16" style="fill:var(--theme-primary)" />
+            </pattern>
+          </defs>
+
+          <circle cx="360" cy="264" r="250" fill="url(#network-aura)" />
+          <circle cx="360" cy="264" r="206" stroke-opacity=".12" stroke-dasharray="2 8" style="stroke:var(--theme-primary)" />
+          <circle cx="360" cy="264" r="166" stroke-opacity=".12" style="stroke:var(--theme-primary)" />
+          <circle cx="360" cy="264" r="230" fill="url(#network-grid)" opacity=".38" />
+
+          <g class="network-links" stroke="url(#network-line)" stroke-width="1.2">
+            <path d="M360 264 154 157 259 82 360 116 515 128 585 231 532 365 416 427 244 383 132 278 154 157" />
+            <path d="M154 157 259 270 360 116 360 264 515 128 454 270 585 231 454 270 532 365 454 270 416 427 360 264 244 383 259 270 132 278 259 270" stroke-opacity=".58" />
+            <path d="M259 270 360 264 454 270" stroke-width="2" />
+          </g>
+
+          <g class="network-cube cube-a">
+            <path d="m154 130 27 15v31l-27 16-27-16v-31l27-15Z" fill="url(#cube-top)" stroke-opacity=".72" style="stroke:var(--theme-primary)" />
+            <path d="m127 145 27 16v31l-27-16v-31Z" fill="url(#cube-side)" stroke-opacity=".44" style="stroke:var(--theme-primary)" />
+            <path d="m181 145-27 16v31l27-16v-31Z" fill-opacity=".24" stroke-opacity=".46" style="fill:var(--theme-primary);stroke:var(--primary-soft)" />
+          </g>
+          <g class="network-cube cube-b">
+            <path d="m515 102 27 15v31l-27 16-27-16v-31l27-15Z" fill="url(#cube-top)" stroke-opacity=".68" style="stroke:var(--theme-primary)" />
+            <path d="m488 117 27 16v31l-27-16v-31Z" fill="url(#cube-side)" stroke-opacity=".42" style="stroke:var(--theme-primary)" />
+            <path d="m542 117-27 16v31l27-16v-31Z" fill-opacity=".22" stroke-opacity=".42" style="fill:var(--theme-primary);stroke:var(--primary-soft)" />
+          </g>
+          <g class="network-cube cube-c">
+            <path d="m585 207 24 14v28l-24 14-24-14v-28l24-14Z" fill="url(#cube-top)" stroke-opacity=".62" style="stroke:var(--theme-primary)" />
+            <path d="m561 221 24 14v28l-24-14v-28Z" fill="url(#cube-side)" stroke-opacity=".4" style="stroke:var(--theme-primary)" />
+            <path d="m609 221-24 14v28l24-14v-28Z" fill-opacity=".2" stroke-opacity=".4" style="fill:var(--theme-primary);stroke:var(--primary-soft)" />
+          </g>
+          <g class="network-cube cube-d">
+            <path d="m244 358 27 15v31l-27 16-27-16v-31l27-15Z" fill="url(#cube-top)" stroke-opacity=".62" style="stroke:var(--theme-primary)" />
+            <path d="m217 373 27 16v31l-27-16v-31Z" fill="url(#cube-side)" stroke-opacity=".4" style="stroke:var(--theme-primary)" />
+            <path d="m271 373-27 16v31l27-16v-31Z" fill-opacity=".2" stroke-opacity=".4" style="fill:var(--theme-primary);stroke:var(--primary-soft)" />
+          </g>
+
+          <g class="network-core">
+            <path d="m360 198 57 33v66l-57 33-57-33v-66l57-33Z" fill-opacity=".94" stroke-opacity=".76" style="fill:var(--card);stroke:var(--primary-soft)" />
+            <path d="m360 211 46 27v52l-46 27-46-27v-52l46-27Z" fill-opacity=".1" stroke-opacity=".42" style="fill:var(--theme-primary);stroke:var(--primary-soft)" />
+            <path d="m360 211 46 27-46 27-46-27 46-27Z" fill="url(#cube-top)" stroke-opacity=".55" style="stroke:var(--theme-secondary)" />
+            <path d="m314 238 46 27v52l-46-27v-52Z" fill="url(#cube-side)" stroke-opacity=".5" style="stroke:var(--primary-soft)" />
+            <path d="m406 238-46 27v52l46-27v-52Z" fill-opacity=".38" stroke-opacity=".6" style="fill:var(--theme-primary);stroke:var(--theme-secondary)" />
+            <circle cx="360" cy="265" r="5" filter="url(#node-glow)" style="fill:var(--theme-secondary)" />
+            <circle cx="342" cy="255" r="3" style="fill:var(--primary-soft)" />
+            <circle cx="378" cy="255" r="3" style="fill:var(--primary-soft)" />
+            <circle cx="360" cy="286" r="3" style="fill:var(--primary-soft)" />
+            <path d="m342 255 18 10 18-10m-18 10v21" stroke-opacity=".76" style="stroke:var(--theme-secondary)" />
+          </g>
+
+          <g class="network-points" filter="url(#node-glow)" style="fill:var(--theme-secondary)">
+            <circle cx="259" cy="270" r="3.5" /><circle cx="454" cy="270" r="3.5" />
+            <circle cx="360" cy="116" r="3" /><circle cx="132" cy="278" r="2.5" />
+            <circle cx="532" cy="365" r="2.5" /><circle cx="416" cy="427" r="2.5" />
+          </g>
+        </svg>
+        <div class="network-label network-label-left"><span>01</span> SMART CONTRACTS</div>
+        <div class="network-label network-label-right"><span>02</span> AI AGENTS</div>
+      </div>
