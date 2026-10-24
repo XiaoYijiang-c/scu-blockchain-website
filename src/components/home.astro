@@ -1,6 +1,7 @@
 ---
-import badgeSvg from "../../public/logo/0xwe-badge.svg?raw";
+import logoMarkSvg from "../../public/logo/0xwe-mark.svg?raw";
 const directions = ["区块链", "智能合约", "Web3", "AI-Agent"];
+const logoDepth = Array.from({ length: 20 }, (_, index) => index + 1);
 ---
 
 <section id="home" class="hero" aria-labelledby="hero-title">
@@ -32,8 +33,13 @@ const directions = ["区块链", "智能合约", "Web3", "AI-Agent"];
       </p>
     </div>
     <div class="hero-art">
-      <div class="badge-stage" data-pointer-tilt="badge" role="group" tabindex="0" aria-label="可交互的区块链协会 3D 徽章。移动鼠标调整角度，按住拖动旋转，也可使用方向键。">
-        <div class="badge-medallion" role="img" aria-label="四川大学区块链协会 0xWE 徽章" set:html={badgeSvg} />
+      <div class="logo-stage" data-pointer-tilt="logo" role="group" tabindex="0" aria-label="可交互的四川大学区块链协会立体标志。移动鼠标调整角度，按住拖动旋转，也可使用方向键。">
+        <div class="logo-sculpture" role="img" aria-label="四川大学区块链协会标志">
+          {logoDepth.map((depth) => (
+            <span class="logo-depth" style={`--depth: ${depth}px`} aria-hidden="true" />
+          ))}
+          <span class="logo-face" set:html={logoMarkSvg} aria-hidden="true" />
+        </div>
       </div>
     </div>
   </div>

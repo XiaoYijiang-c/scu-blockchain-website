@@ -1,0 +1,104 @@
+---
+interface RoadmapItem {
+  title: string;
+  text: string;
+}
+
+interface Props {
+  items: RoadmapItem[];
+}
+
+const { items } = Astro.props as Props;
+---
+
+<div class="roadmap-story" data-roadmap-story>
+  <ol class="roadmap-steps" aria-label="六项发展规划">
+    {items.map((item, index) => (
+      <li>
+        <button
+          class="roadmap-step"
+          type="button"
+          data-roadmap-step
+          data-story-title={item.title}
+          aria-current={index === 0 ? "step" : undefined}
+        >
+          <span class="roadmap-number">{String(index + 1).padStart(2, "0")}</span>
+          <span class="roadmap-step-copy">
+            <strong>{item.title}</strong>
+            <span>{item.text}</span>
+          </span>
+          <span class="roadmap-step-mark" aria-hidden="true">↗</span>
+        </button>
+      </li>
+    ))}
+  </ol>
+
+  <div class="roadmap-visual" data-roadmap-visual data-active="0" aria-hidden="true">
+    <div class="roadmap-visual-top"><span>SCU BLOCKCHAIN</span><span>GROWTH SYSTEM / 01—06</span></div>
+    <svg class="roadmap-map" viewBox="0 0 560 560" fill="none">
+      <circle class="roadmap-orbit roadmap-orbit-outer" cx="280" cy="280" r="214" />
+      <circle class="roadmap-orbit roadmap-orbit-inner" cx="280" cy="280" r="150" />
+      <path class="roadmap-spokes" d="M280 66v428M66 280h428M129 129l302 302M431 129 129 431" />
+      <path class="roadmap-route" d="M280 66c118 0 214 96 214 214S398 494 280 494 66 398 66 280 162 66 280 66Z" />
+      <g class="roadmap-node" data-roadmap-node="0"><circle cx="280" cy="66" r="18" /><text x="280" y="70">01</text></g>
+      <g class="roadmap-node" data-roadmap-node="1"><circle cx="466" cy="173" r="18" /><text x="466" y="177">02</text></g>
+      <g class="roadmap-node" data-roadmap-node="2"><circle cx="466" cy="387" r="18" /><text x="466" y="391">03</text></g>
+      <g class="roadmap-node" data-roadmap-node="3"><circle cx="280" cy="494" r="18" /><text x="280" y="498">04</text></g>
+      <g class="roadmap-node" data-roadmap-node="4"><circle cx="94" cy="387" r="18" /><text x="94" y="391">05</text></g>
+      <g class="roadmap-node" data-roadmap-node="5"><circle cx="94" cy="173" r="18" /><text x="94" y="177">06</text></g>
+      <circle class="roadmap-hub-ring" cx="280" cy="280" r="96" />
+      <path class="roadmap-hub-mark" d="M244 301h72M256 281h48M268 261h24" />
+      <circle class="roadmap-hub-dot" cx="280" cy="228" r="4" />
+    </svg>
+    <div class="roadmap-visual-caption">
+      <span>FOCUS / <b data-roadmap-index>01</b></span>
+      <strong data-roadmap-title>培养体系</strong>
+      <span>循序成长 · 持续共建</span>
+    </div>
+    <span class="roadmap-visual-corner" aria-hidden="true">SCU / WEB3</span>
+  </div>
+</div>
+
+<script>
+  const stories = document.querySelectorAll<HTMLElement>("[data-roadmap-story]");
+
+  stories.forEach((story) => {
+    if (story.dataset.initialized === "true") return;
+    story.dataset.initialized = "true";
+
+    const steps = [...story.querySelectorAll<HTMLButtonElement>("[data-roadmap-step]")];
+    const visual = story.querySelector<HTMLElement>("[data-roadmap-visual]");
+    const title = story.querySelector<HTMLElement>("[data-roadmap-title]");
+    const index = story.querySelector<HTMLElement>("[data-roadmap-index]");
+    if (!steps.length || !visual) return;
+
+    const activate = (activeIndex: number) => {
+      steps.forEach((step, stepIndex) => {
+        if (stepIndex === activeIndex) step.setAttribute("aria-current", "step");
+        else step.removeAttribute("aria-current");
+      });
+      visual.dataset.active = String(activeIndex);
+      if (title) title.textContent = steps[activeIndex].dataset.storyTitle || "";
+      if (index) index.textContent = String(activeIndex + 1).padStart(2, "0");
+    };
+
+    steps.forEach((step, stepIndex) => {
+      step.addEventListener("focus", () => activate(stepIndex));
+      step.addEventListener("click", () => activate(stepIndex));
+    });
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const activeIndex = steps.indexOf(entry.target as HTMLButtonElement);
+            if (activeIndex >= 0) activate(activeIndex);
+          }
+        },
+        { rootMargin: "-42% 0px -42% 0px", threshold: 0 },
+      );
+      steps.forEach((step) => observer.observe(step));
+    }
+  });
+</script>

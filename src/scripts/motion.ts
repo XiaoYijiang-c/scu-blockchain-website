@@ -4,7 +4,10 @@ const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
 let dispose = () => {};
 
 function setupPointerTilt() {
-  const active = new Map<HTMLElement, { x: number; y: number; rx: number; ry: number }>();
+  const active = new Map<
+    HTMLElement,
+    { x: number; y: number; rx: number; ry: number }
+  >();
   const getTarget = (event: Event) =>
     event.target instanceof Element
       ? event.target.closest<HTMLElement>("[data-pointer-tilt]")
@@ -18,13 +21,17 @@ function setupPointerTilt() {
     if (!element || event.pointerType !== "mouse") return;
     const drag = active.get(element);
     if (drag) {
-      setTilt(element, drag.rx - (event.clientY - drag.y) * 0.38, drag.ry + (event.clientX - drag.x) * 0.48);
+      setTilt(
+        element,
+        drag.rx - (event.clientY - drag.y) * 0.38,
+        drag.ry + (event.clientX - drag.x) * 0.48,
+      );
       return;
     }
     const rect = element.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width - 0.5;
     const y = (event.clientY - rect.top) / rect.height - 0.5;
-    const scale = element.dataset.pointerTilt === "badge" ? 18 : 7;
+    const scale = element.dataset.pointerTilt === "logo" ? 18 : 7;
     setTilt(element, -y * scale, x * scale);
   };
   const onLeave = (event: PointerEvent) => {
@@ -36,12 +43,21 @@ function setupPointerTilt() {
   };
   const onDown = (event: PointerEvent) => {
     const element = getTarget(event);
-    if (!element || element.dataset.pointerTilt !== "badge" || event.button !== 0) return;
+    if (
+      !element ||
+      element.dataset.pointerTilt !== "logo" ||
+      event.button !== 0
+    )
+      return;
     active.set(element, {
       x: event.clientX,
       y: event.clientY,
-      rx: Number.parseFloat(element.style.getPropertyValue("--pointer-tilt-x")) || 7,
-      ry: Number.parseFloat(element.style.getPropertyValue("--pointer-tilt-y")) || -18,
+      rx:
+        Number.parseFloat(element.style.getPropertyValue("--pointer-tilt-x")) ||
+        7,
+      ry:
+        Number.parseFloat(element.style.getPropertyValue("--pointer-tilt-y")) ||
+        -18,
     });
     element.classList.add("is-dragging");
     element.setPointerCapture(event.pointerId);
@@ -52,14 +68,32 @@ function setupPointerTilt() {
   };
   const onKey = (event: KeyboardEvent) => {
     const element = getTarget(event);
-    if (!element || element.dataset.pointerTilt !== "badge") return;
+    if (!element || element.dataset.pointerTilt !== "logo") return;
     const step = event.shiftKey ? 10 : 4;
     const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
     if (!keys.includes(event.key)) return;
     event.preventDefault();
-    const currentX = Number.parseFloat(element.style.getPropertyValue("--pointer-tilt-x")) || 7;
-    const currentY = Number.parseFloat(element.style.getPropertyValue("--pointer-tilt-y")) || -18;
-    setTilt(element, currentX + (event.key === "ArrowUp" ? -step : event.key === "ArrowDown" ? step : 0), currentY + (event.key === "ArrowRight" ? step : event.key === "ArrowLeft" ? -step : 0));
+    const currentX =
+      Number.parseFloat(element.style.getPropertyValue("--pointer-tilt-x")) ||
+      7;
+    const currentY =
+      Number.parseFloat(element.style.getPropertyValue("--pointer-tilt-y")) ||
+      -18;
+    setTilt(
+      element,
+      currentX +
+        (event.key === "ArrowUp"
+          ? -step
+          : event.key === "ArrowDown"
+            ? step
+            : 0),
+      currentY +
+        (event.key === "ArrowRight"
+          ? step
+          : event.key === "ArrowLeft"
+            ? -step
+            : 0),
+    );
   };
   document.addEventListener("pointermove", onMove, { passive: true });
   document.addEventListener("pointerover", onMove, { passive: true });
@@ -69,6 +103,13 @@ function setupPointerTilt() {
   window.addEventListener("pointercancel", onUp);
   document.addEventListener("keydown", onKey);
   return () => {
+    onUp();
+    document
+      .querySelectorAll<HTMLElement>("[data-pointer-tilt]")
+      .forEach((element) => {
+        element.style.removeProperty("--pointer-tilt-x");
+        element.style.removeProperty("--pointer-tilt-y");
+      });
     document.removeEventListener("pointermove", onMove);
     document.removeEventListener("pointerover", onMove);
     document.removeEventListener("pointerout", onLeave);
@@ -79,14 +120,12 @@ function setupPointerTilt() {
   };
 }
 
-const disposePointerTilt = setupPointerTilt();
-window.addEventListener("pagehide", disposePointerTilt, { once: true });
-
 function setupMotion() {
   dispose();
   if (preference.matches) return;
 
   const cleanups: (() => void)[] = [];
+  cleanups.push(setupPointerTilt());
   const animated = new Set<HTMLElement>();
   const animations: ReturnType<typeof animate>[] = [];
   const reveal = (element: HTMLElement, delay = 0) => {
@@ -116,7 +155,7 @@ function setupMotion() {
           () => {
             section
               .querySelectorAll<HTMLElement>(
-                ".section-kicker, .section-title, .section-intro, .info-card, .roadmap-item, .partner-panel, .alliance-panel, .archive-type, .resource-card, .join-card",
+                ".section-kicker, .section-title, .section-intro, .info-card, .gallery-card, .roadmap-step, .partner-panel, .alliance-panel, .archive-type, .resource-card, .join-card",
               )
               .forEach((element, index) =>
                 reveal(element, Math.min(index * 0.055, 0.3)),
@@ -154,7 +193,58 @@ function setupMotion() {
 
   if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     document
-      .querySelectorAll<HTMLElement>(".info-card, .partner-panel, .join-card")
+      .querySelectorAll<HTMLElement>("[data-portrait], [data-magnetic]")
+      .forEach((element) => {
+        let frame = 0;
+        const portrait = element.hasAttribute("data-portrait");
+        const reset = () => {
+          cancelAnimationFrame(frame);
+          [
+            "--portrait-x",
+            "--portrait-y",
+            "--portrait-rx",
+            "--portrait-ry",
+            "--magnet-x",
+            "--magnet-y",
+          ].forEach((property) => element.style.removeProperty(property));
+        };
+        const move = (event: PointerEvent) => {
+          if (
+            event.pointerType !== "mouse" ||
+            event.buttons ||
+            element.matches(":disabled")
+          )
+            return;
+          cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(() => {
+            const rect = element.getBoundingClientRect();
+            const x = (event.clientX - rect.left) / rect.width - 0.5;
+            const y = (event.clientY - rect.top) / rect.height - 0.5;
+            if (portrait) {
+              element.style.setProperty("--portrait-x", `${x * 12}px`);
+              element.style.setProperty("--portrait-y", `${y * 8}px`);
+              element.style.setProperty("--portrait-rx", `${-y * 5}deg`);
+              element.style.setProperty("--portrait-ry", `${x * 7}deg`);
+            } else {
+              element.style.setProperty("--magnet-x", `${x * 6}px`);
+              element.style.setProperty("--magnet-y", `${y * 6}px`);
+            }
+          });
+        };
+        element.addEventListener("pointermove", move, { passive: true });
+        element.addEventListener("pointerleave", reset);
+        element.addEventListener("pointerdown", reset);
+        cleanups.push(() => {
+          reset();
+          element.removeEventListener("pointermove", move);
+          element.removeEventListener("pointerleave", reset);
+          element.removeEventListener("pointerdown", reset);
+        });
+      });
+    document
+      .querySelectorAll<HTMLElement>(
+        ".info-card, .partner-panel, .join-card, .gallery-card",
+      )
       .forEach((card) => {
         let frame = 0;
         const move = (event: PointerEvent) => {
@@ -178,6 +268,24 @@ function setupMotion() {
         });
       });
   }
+
+  document
+    .querySelectorAll<HTMLDialogElement>(".member-dialog")
+    .forEach((dialog) => {
+      const observer = new MutationObserver(() => {
+        if (!dialog.open) return;
+        animated.add(dialog);
+        animations.push(
+          animate(
+            dialog,
+            { opacity: [0, 1], y: [16, 0], scale: [0.98, 1] },
+            { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+          ),
+        );
+      });
+      observer.observe(dialog, { attributes: true, attributeFilter: ["open"] });
+      cleanups.push(() => observer.disconnect());
+    });
 
   dispose = () => {
     cleanups.forEach((cleanup) => cleanup());

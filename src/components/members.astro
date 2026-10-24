@@ -1,0 +1,166 @@
+---
+import ActivityGallery from "@/components/ui/ActivityGallery.astro";
+import MemberPortrait from "@/components/ui/MemberPortrait.astro";
+import { members } from "@/data/members";
+---
+
+<section
+  id="members"
+  class="w-full border-t border-border"
+  aria-labelledby="members-title"
+>
+  <div class="max-w-5xl mx-auto">
+    <div class="members-heading">
+      <div>
+        <p class="section-kicker">THE PEOPLE BEHIND THE BLOCKS</p>
+        <h2 id="members-title" class="section-title">
+          认识我们的成员
+          <span class="members-title-dot" aria-hidden="true">
+            .
+          </span>
+        </h2>
+        <p class="section-intro">每一个独特的你，都是连接未来的节点。</p>
+      </div>
+      <p class="members-note">
+        <span class="status-dot" aria-hidden="true"></span> 成员资料待补充
+        <br />
+        <span>头像为原创风格插图</span>
+      </p>
+    </div>
+
+    <ActivityGallery
+      id="member-gallery"
+      label="成员档案"
+      itemCount={members.length}
+    >
+      {members.map((member, index) => (
+        <li
+          class="gallery-card"
+          data-gallery-card
+          data-active={index === 0 ? "true" : "false"}
+        >
+          <article
+            class="member-card"
+            aria-labelledby={`member-name-${member.id}`}
+          >
+            <MemberPortrait member={member} />
+            <div class="gallery-copy">
+              <div class="member-meta">
+                <span class="gallery-index">MEMBER / {member.id}</span>
+                {member.placeholder && (
+                  <span class="member-status">资料待完善</span>
+                )}
+              </div>
+              <h3 id={`member-name-${member.id}`}>{member.name}</h3>
+              <p class="member-role">{member.role}</p>
+              {member.tags.length > 0 && (
+                <ul class="member-tags" aria-label="研究方向">
+                  {member.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              )}
+              <p class="member-bio">{member.bio}</p>
+              <button
+                class="member-profile-button"
+                type="button"
+                data-profile-open={`profile-${member.id}`}
+                aria-haspopup="dialog"
+                aria-controls={`profile-${member.id}`}
+                data-magnetic
+              >
+                <span>{member.placeholder ? "查看档案" : "查看简历"}</span>
+                <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ActivityGallery>
+
+    <div class="members-footer">
+      <span>不同的方向，共同的好奇心。</span>
+      <a href="#join" data-magnetic>
+        成为其中一员 <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+
+  {members.map((member) => (
+    <dialog
+      class="member-dialog"
+      id={`profile-${member.id}`}
+      aria-labelledby={`profile-title-${member.id}`}
+      aria-describedby={`profile-description-${member.id}`}
+    >
+      <button
+        type="button"
+        class="profile-close"
+        data-profile-close
+        autofocus
+        aria-label="关闭成员档案"
+      >
+        ×
+      </button>
+      <div class="profile-layout">
+        <div class="profile-visual">
+          <MemberPortrait member={member} decorative />
+          <p>SCU BLOCKCHAIN / MEMBER {member.id}</p>
+        </div>
+        <div class="profile-content">
+          <p class="gallery-index">MEMBER PROFILE / {member.id}</p>
+          <h2 id={`profile-title-${member.id}`}>{member.name}</h2>
+          <p class="member-role">{member.role}</p>
+          <p
+            id={`profile-description-${member.id}`}
+            class="profile-description"
+          >
+            {member.placeholder
+              ? "这是一份待完善的成员档案。头像为风格插图，姓名、职责与经历将在本人确认后公开。"
+              : member.bio}
+          </p>
+          <div class="profile-section">
+            <h3>研究方向</h3>
+            {member.tags.length ? (
+              <ul class="member-tags">
+                {member.tags.map((tag) => (
+                  <li>{tag}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>待补充</p>
+            )}
+          </div>
+          <div class="profile-section">
+            <h3>项目与经历</h3>
+            {member.experience.length ? (
+              <ol class="profile-experience">
+                {member.experience.map((item) => (
+                  <li>
+                    <strong>{item.title}</strong>
+                    <p>{item.text}</p>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p>已确认的项目、贡献与经历将在这里展示。</p>
+            )}
+          </div>
+          {member.links.length > 0 && (
+            <div class="profile-links">
+              {member.links.map((link) => (
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  {link.label} ↗
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </dialog>
+  ))}
+</section>
+
+<script>
+  import "@/scripts/member-profiles";
+</script>

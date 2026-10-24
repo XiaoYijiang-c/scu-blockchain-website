@@ -1,0 +1,46 @@
+---
+import type { Member } from "@/data/members";
+interface Props {
+  member: Member;
+  decorative?: boolean;
+}
+const { member, decorative = false } = Astro.props;
+---
+
+<div
+  class="member-portrait"
+  data-portrait
+  style={`--portrait-index: ${Number(member.id) - 1}`}
+>
+  <span class="portrait-orbit" aria-hidden="true"></span>
+  <span class="portrait-orbit portrait-orbit-inner" aria-hidden="true"></span>
+  <svg
+    class="portrait-network"
+    viewBox="0 0 400 360"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path d="M35 96h65l38 38h124l45-45h58M25 266h72l45-45h109l44 44h78" />
+    <g>
+      <circle cx="35" cy="96" r="4" />
+      <circle cx="365" cy="89" r="4" />
+      <circle cx="25" cy="266" r="4" />
+      <circle cx="373" cy="265" r="4" />
+    </g>
+  </svg>
+  <span class="portrait-coordinate" aria-hidden="true">
+    SCU / {member.id}
+  </span>
+  <img
+    src={member.avatar}
+    alt={decorative ? "" : member.avatarDescription}
+    width="768"
+    height="768"
+    loading="lazy"
+    decoding="async"
+    draggable="false"
+  />
+  <span class="portrait-caption" aria-hidden="true">
+    CONNECT · CREATE
+  </span>
+</div>

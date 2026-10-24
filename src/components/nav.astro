@@ -3,6 +3,7 @@ interface NavItem {
   label: string;
   href: string;
   icon: string;
+  sections?: string[];
 }
 
 const navItems: NavItem[] = [
@@ -47,6 +48,13 @@ const navItems: NavItem[] = [
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></svg>`,
   },
 ];
+
+const navGroups: NavItem[] = [
+  { label: "关于", href: "#home", icon: navItems[0].icon, sections: ["home", "members"] },
+  { label: "学习与实践", href: "#activities", icon: navItems[1].icon, sections: ["activities", "roadmap", "archive", "resources"] },
+  { label: "合作共建", href: "#partnership", icon: navItems[3].icon, sections: ["partnership", "alliance"] },
+  { label: "加入我们", href: "#join", icon: navItems[7].icon, sections: ["join"] },
+];
 ---
 
 <div class="flex justify-center w-full">
@@ -57,10 +65,11 @@ const navItems: NavItem[] = [
   >
     <div class="container mx-auto flex justify-center items-center p-3">
       <ul class="flex w-full justify-between md:space-x-6 md:justify-center md:gap-12 gap-2 max-md:w-max max-md:min-w-full max-md:px-4">
-        {navItems.map((item) => (
+        {navGroups.map((item) => (
           <li class="flex-1 md:flex-none max-md:flex-none">
             <a
               href={item.href}
+              data-sections={item.sections?.join(" ")}
               aria-current={
                 item.href === (Astro.url.hash || "#home")
                   ? "location"
@@ -160,7 +169,7 @@ const navItems: NavItem[] = [
     }
     if (!current) return;
     links.forEach((link) => {
-      const active = link.hash === `#${current.id}`;
+      const active = link.dataset.sections?.split(" ").includes(current.id) ?? link.hash === `#${current.id}`;
       link.classList.toggle("active", active);
       if (active) link.setAttribute("aria-current", "location");
       else link.removeAttribute("aria-current");

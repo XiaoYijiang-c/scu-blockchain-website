@@ -1,0 +1,71 @@
+﻿---
+interface Props {
+  id: string;
+  label: string;
+  itemCount: number;
+}
+const { id, label, itemCount } = Astro.props;
+---
+
+<div
+  class="activity-gallery"
+  data-gallery
+  role="region"
+  aria-roledescription="轮播"
+  aria-label={label}
+>
+  <div class="gallery-toolbar">
+    <p class="gallery-hint">
+      <span aria-hidden="true">↔</span> 拖动，认识更多伙伴
+    </p>
+    <div class="gallery-controls" aria-label={`${label}控制`}>
+      <output
+        class="gallery-count"
+        data-gallery-count
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        01 / {String(itemCount).padStart(2, "0")}
+      </output>
+      <button
+        type="button"
+        class="gallery-arrow"
+        data-gallery-prev
+        data-magnetic
+        aria-label="查看上一位成员"
+        aria-controls={id}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 5 8 12l7 7" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="gallery-arrow"
+        data-gallery-next
+        data-magnetic
+        aria-label="查看下一位成员"
+        aria-controls={id}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m9 5 7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <ul
+    class="gallery-track"
+    id={id}
+    tabindex="0"
+    aria-label={`${label}，可用左右方向键切换`}
+  >
+    <slot />
+  </ul>
+  <div class="gallery-progress" aria-hidden="true">
+    <span data-gallery-progress></span>
+  </div>
+</div>
+
+<script>
+  import "@/scripts/gallery";
+</script>

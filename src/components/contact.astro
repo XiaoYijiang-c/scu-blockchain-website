@@ -1,5 +1,27 @@
 ---
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+const contactOptions = [
+  {
+    label: "01 · MEMBERSHIP",
+    title: "普通成员报名",
+    description: "欢迎对技术、研究与跨学科协作感兴趣的同学加入。",
+    qrCaption: "扫码报名入口待补充",
+    qrLabel: "招新报名二维码位置预留",
+  },
+  {
+    label: "02 · PARTNERSHIP",
+    title: "合作咨询",
+    description: "欢迎高校社团、研究团队、技术社区与赛事伙伴联系交流。",
+    qrCaption: "扫码联系通道待补充",
+    qrLabel: "合作咨询二维码位置预留",
+  },
+];
+const contactChannels = [
+  { label: "Instagram", placeholder: "账号待补充" },
+  { label: "QQ群", placeholder: "群号待补充" },
+  { label: "公众号", placeholder: "信息待补充" },
+];
 ---
 
 <section id="join" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="join-title">
@@ -8,38 +30,62 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
     <h2 id="join-title" class="section-title">加入我们 <span class="text-[var(--white-icon)]">/ 联系</span></h2>
     <p class="section-intro">不论你是想开始探索，还是希望与我们共建，都欢迎找到适合你的入口。</p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Card className="join-card" data-pointer-tilt="card">
-        <CardHeader className="p-0">
-        <span class="join-label">01 · MEMBERSHIP</span>
-        <CardTitle className="join-title">普通成员报名</CardTitle>
-        <p class="join-description">欢迎对技术、研究与跨学科协作感兴趣的同学加入。</p>
-        </CardHeader>
-        <CardContent className="p-0">
-        <div class="contact-placeholder" aria-label="招新报名链接尚待补充">招新报名入口待补充</div>
-        </CardContent>
-      </Card>
-      <Card className="join-card" data-pointer-tilt="card">
-        <CardHeader className="p-0">
-        <span class="join-label">02 · PARTNERSHIP</span>
-        <CardTitle className="join-title">合作咨询</CardTitle>
-        <p class="join-description">欢迎高校社团、研究团队、技术社区与赛事伙伴联系交流。</p>
-        </CardHeader>
-        <CardContent className="p-0">
-        <div class="contact-placeholder" aria-label="合作咨询联系方式尚待补充">合作咨询通道待补充</div>
-        </CardContent>
-      </Card>
+    <div class="join-grid grid grid-cols-1 md:grid-cols-2 gap-4">
+      {contactOptions.map((option) => (
+        <Card className="join-card" data-pointer-tilt="card">
+          <CardHeader className="join-card-header p-0">
+            <span class="join-label">{option.label}</span>
+            <CardTitle className="join-title">{option.title}</CardTitle>
+            <p class="join-description">{option.description}</p>
+          </CardHeader>
+          <CardContent className="join-card-content p-0">
+            <div class="join-card-layout">
+              <p class="join-qr-caption">{option.qrCaption}</p>
+              <div class="join-qr-placeholder" role="img" aria-label={option.qrLabel}>
+                <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+                  <path d="M5 15V5h10M25 5h10v10M35 25v10H25M15 35H5V25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M14 14h12v12H14z" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" />
+                </svg>
+                <span>二维码</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
     </div>
-    <div class="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-[var(--white-icon)]">
-      <span>QQ群：待补充</span><span>公众号：待补充</span>
+    <div class="contact-channels">
+      <h3 class="contact-channels-title">其他联系渠道</h3>
+      <div class="contact-channel-list">
+        {contactChannels.map((channel) => (
+          <div class="contact-channel" aria-label={`${channel.label}${channel.placeholder}`}>
+            <span>{channel.label}</span>
+            <span>{channel.placeholder}</span>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
 <style is:global>
-  .join-card { border: 1px solid var(--white-icon-tr); border-radius: 1.2rem; background: radial-gradient(ellipse at top right, color-mix(in srgb, var(--theme-primary) 7.1%, transparent), transparent 55%), color-mix(in srgb, var(--card) 61.2%, transparent); padding: clamp(1.25rem, 4vw, 2rem); }
   .join-label { color: var(--sec); font-size: 0.7rem; letter-spacing: 0.16em; }
   .join-title { color: var(--white); font-size: 1.5rem; font-weight: 500; margin-top: 1rem; }
   .join-description { color: var(--white-icon); line-height: 1.7; margin-top: 0.7rem; min-height: 3.4em; }
-  .contact-placeholder { display: flex; justify-content: center; align-items: center; min-height: 48px; margin-top: 1.5rem; border: 1px dashed color-mix(in srgb, var(--theme-primary) 33.3%, transparent); border-radius: 0.75rem; color: var(--primary-soft); background: color-mix(in srgb, var(--theme-primary) 3.9%, transparent); font-size: 0.9rem; }
+  .join-card-header { display: flex; flex-direction: column; gap: 0; }
+  .join-card-content { margin-top: 1.5rem; }
+  .join-card-layout { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem; }
+  .join-qr-caption { max-width: 12em; color: var(--white-icon); font-size: 0.9rem; line-height: 1.7; }
+  .join-qr-placeholder { display: flex; width: 124px; aspect-ratio: 1; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem; border: 1px dashed color-mix(in srgb, var(--theme-primary) 42%, transparent); border-radius: 0.9rem; background: color-mix(in srgb, var(--theme-primary) 5%, transparent); color: var(--primary-soft); font-size: 0.75rem; }
+  .join-qr-placeholder svg { width: 2.25rem; height: 2.25rem; opacity: 0.8; }
+  .contact-channels { max-width: 900px; margin: 2rem auto 0; text-align: left; }
+  .contact-channels-title { margin-bottom: 0.75rem; color: var(--white-icon); font-size: 0.8rem; font-weight: 500; }
+  .contact-channel-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
+  .contact-channel { display: flex; min-width: 0; flex-direction: column; gap: 0.25rem; padding: 0.85rem 1rem; border: 1px solid var(--border-subtle); border-radius: 0.8rem; background: color-mix(in srgb, var(--card) 50%, transparent); }
+  .contact-channel span:first-child { color: var(--white); font-size: 0.85rem; }
+  .contact-channel span:last-child { color: var(--text-subtle); font-size: 0.75rem; }
+  @media (max-width: 767px) {
+    .join-qr-placeholder { width: 96px; }
+    .contact-channel-list { grid-template-columns: 1fr; gap: 0.5rem; }
+    .contact-channel { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 0.75rem; }
+  }
 </style>

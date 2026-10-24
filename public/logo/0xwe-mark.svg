@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 102 70" fill="none">
+  <title>四川大学区块链协会标志</title>
+  <g fill="var(--logo-white, #f3f0e7)">
+    <path d="M4 5H15C17 9 21 10.5 27 11.5C29.5 12 30.5 13 30.5 16V47C27 45 23.7 44.1 20.5 44.8V18.5C14.2 18 11 15.5 10 12C6.2 11.2 4.8 8.5 4 5Z" />
+    <path d="M4 5H15C17 9 21 10.5 27 11.5C29.5 12 30.5 13 30.5 16V47C27 45 23.7 44.1 20.5 44.8V18.5C14.2 18 11 15.5 10 12C6.2 11.2 4.8 8.5 4 5Z" transform="translate(94 0) scale(-1 1)" />
+    <path d="M42 19Q42 17 44 17H50Q52 17 52 19V46Q47 43.5 42 46Z" />
+  </g>
+  <g fill="var(--logo-red, #b52d3b)" stroke="#24141A" stroke-width=".65" stroke-linejoin="round" paint-order="stroke">
+    <path d="M4 55C11 56 15 49 21 47C27 45 31 49 34 53L30 57C27 60 24 54 22 54C19 54 14 63 4 62Z" />
+    <path d="M4 55C11 56 15 49 21 47C27 45 31 49 34 53L30 57C27 60 24 54 22 54C19 54 14 63 4 62Z" transform="translate(94 0) scale(-1 1)" />
+    <path d="M22 58C29 62 34 51 40 48C45 44 49 44 54 48C60 51 65 62 72 58L70 62C61 68 55 60 47 53C39 60 33 68 24 62Z" />
+  </g>
+</svg>

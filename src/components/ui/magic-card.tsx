@@ -1,10 +1,5 @@
 import React, { useCallback, useEffect, useRef } from "react"
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-} from "motion/react"
+import { motion, useMotionValue, useSpring } from "motion/react"
 import { cn } from "@/lib/utils"
 
 interface MagicCardBaseProps {
@@ -71,6 +66,7 @@ export function MagicCard(props: MagicCardProps) {
   const glowOpacity = isOrbMode(props) ? (props.glowOpacity ?? 0.9) : 0.9
   const mouseX = useMotionValue(-gradientSize)
   const mouseY = useMotionValue(-gradientSize)
+  const cardRef = useRef<HTMLDivElement>(null)
 
   const orbX = useSpring(mouseX, { stiffness: 250, damping: 30, mass: 0.6 })
   const orbY = useSpring(mouseY, { stiffness: 250, damping: 30, mass: 0.6 })
@@ -95,16 +91,18 @@ export function MagicCard(props: MagicCardProps) {
   const reset = useCallback(
     (reason: ResetReason = "leave") => {
       const currentMode = modeRef.current
+      const off = -gradientSizeRef.current
+
+      mouseX.set(off)
+      mouseY.set(off)
+      cardRef.current?.style.setProperty("--magic-card-pointer-x", `${off}px`)
+      cardRef.current?.style.setProperty("--magic-card-pointer-y", `${off}px`)
 
       if (currentMode === "orb") {
         if (reason === "enter") orbVisible.set(glowOpacityRef.current)
         else orbVisible.set(0)
         return
       }
-
-      const off = -gradientSizeRef.current
-      mouseX.set(off)
-      mouseY.set(off)
     },
     [mouseX, mouseY, orbVisible]
   )
@@ -112,8 +110,12 @@ export function MagicCard(props: MagicCardProps) {
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
       const rect = e.currentTarget.getBoundingClientRect()
-      mouseX.set(e.clientX - rect.left)
-      mouseY.set(e.clientY - rect.top)
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+      mouseX.set(x)
+      mouseY.set(y)
+      e.currentTarget.style.setProperty("--magic-card-pointer-x", `${x}px`)
+      e.currentTarget.style.setProperty("--magic-card-pointer-y", `${y}px`)
     },
     [mouseX, mouseY]
   )
@@ -143,25 +145,24 @@ export function MagicCard(props: MagicCardProps) {
   }, [reset])
 
   return (
-    <motion.div
+    <div
       className={cn(
         "group relative isolate overflow-hidden rounded-[inherit] border border-transparent",
         className
       )}
+      ref={cardRef}
       data-pointer-tilt={props["data-pointer-tilt"]}
       onPointerMove={handlePointerMove}
       onPointerLeave={() => reset("leave")}
       onPointerEnter={() => reset("enter")}
       style={{
-        background: useMotionTemplate`
-          linear-gradient(var(--color-card) 0 0) padding-box,
-          radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px,
-            ${gradientFrom},
-            ${gradientTo},
-            var(--color-border) 100%
-          ) border-box
-        `,
-      }}
+        "--magic-card-pointer-x": `${-gradientSize}px`,
+        "--magic-card-pointer-y": `${-gradientSize}px`,
+        "--magic-card-gradient-size": `${gradientSize}px`,
+        "--magic-card-gradient-from": gradientFrom,
+        "--magic-card-gradient-to": gradientTo,
+        background: `linear-gradient(var(--color-card) 0 0) padding-box, radial-gradient(var(--magic-card-gradient-size) circle at var(--magic-card-pointer-x) var(--magic-card-pointer-y), var(--magic-card-gradient-from), var(--magic-card-gradient-to), var(--color-border) 100%) border-box`,
+      } as React.CSSProperties}
     >
       <div className="bg-card absolute inset-px z-20 rounded-[inherit]" />
 
@@ -170,12 +171,7 @@ export function MagicCard(props: MagicCardProps) {
           suppressHydrationWarning
           className="pointer-events-none absolute inset-px z-30 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           style={{
-            background: useMotionTemplate`
-              radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px,
-                ${gradientColor},
-                transparent 100%
-              )
-            `,
+            background: `radial-gradient(var(--magic-card-gradient-size) circle at var(--magic-card-pointer-x) var(--magic-card-pointer-y), ${gradientColor}, transparent 100%)`,
             opacity: gradientOpacity,
           }}
         />
@@ -204,6 +200,6 @@ export function MagicCard(props: MagicCardProps) {
         />
       )}
       <div className="relative z-40">{children}</div>
-    </motion.div>
+    </div>
   )
 }

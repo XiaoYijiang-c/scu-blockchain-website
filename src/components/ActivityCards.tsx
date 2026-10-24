@@ -11,9 +11,9 @@ export function ActivityCards({ activities }: { activities: Activity[] }) {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
       {activities.map((activity) => (
-        <article key={activity.number}>
+        <article key={activity.number} className="h-full">
           <MagicCard
-            className="info-card group"
+            className="info-card group h-full"
             data-pointer-tilt="card"
             gradientColor="var(--primary-glow)"
             gradientFrom="var(--theme-primary)"
@@ -23,8 +23,8 @@ export function ActivityCards({ activities }: { activities: Activity[] }) {
           >
             <CardHeader className="p-0">
               <span className="text-xs tracking-[0.2em] text-[var(--sec)]">{activity.number}</span>
-              <CardTitle className="mt-5 text-xl font-semibold text-[var(--white)]">
-                {activity.title}
+              <CardTitle>
+                <h3>{activity.title}</h3>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">

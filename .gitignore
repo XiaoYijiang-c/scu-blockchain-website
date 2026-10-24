@@ -26,6 +26,7 @@ pnpm-debug.log*
 # local browser screenshots and sessions
 .playwright-cli/
 output/playwright/
+output/imagegen/
 
 # local credentials and agent state
 .env.*
