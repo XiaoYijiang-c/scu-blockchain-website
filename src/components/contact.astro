@@ -1,5 +1,6 @@
 ---
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ShowcaseHeading from "@/components/ui/ShowcaseHeading.astro";
+import ShowcaseCard from "@/components/ui/ShowcaseCard.astro";
 
 const contactOptions = [
   {
@@ -24,40 +25,65 @@ const contactChannels = [
 ];
 ---
 
-<section id="join" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="join-title">
+<section
+  id="join"
+  class="showcase-section w-full border-t border-border"
+  aria-labelledby="join-title"
+>
   <div class="max-w-5xl mx-auto">
-    <p class="section-kicker">COME BUILD WITH US</p>
-    <h2 id="join-title" class="section-title">加入我们 <span class="text-[var(--white-icon)]">/ 联系</span></h2>
-    <p class="section-intro">不论你是想开始探索，还是希望与我们共建，都欢迎找到适合你的入口。</p>
+    <ShowcaseHeading
+      id="join-title"
+      kicker="COME BUILD WITH US"
+      title="加入我们 / 联系"
+      intro="不论你是想开始探索，还是希望与我们共建，都欢迎找到适合你的入口。"
+    />
 
-    <div class="join-grid grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="join-grid showcase-content">
       {contactOptions.map((option) => (
-        <Card className="join-card" data-pointer-tilt="card">
-          <CardHeader className="join-card-header p-0">
+        <ShowcaseCard class="join-card" data-motion-item>
+          <div class="join-card-header">
             <span class="join-label">{option.label}</span>
-            <CardTitle className="join-title">{option.title}</CardTitle>
+            <h3 class="join-title">{option.title}</h3>
             <p class="join-description">{option.description}</p>
-          </CardHeader>
-          <CardContent className="join-card-content p-0">
+          </div>
+          <div class="join-card-content">
             <div class="join-card-layout">
               <p class="join-qr-caption">{option.qrCaption}</p>
-              <div class="join-qr-placeholder" role="img" aria-label={option.qrLabel}>
+              <div
+                class="join-qr-placeholder"
+                role="img"
+                aria-label={option.qrLabel}
+              >
                 <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-                  <path d="M5 15V5h10M25 5h10v10M35 25v10H25M15 35H5V25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M14 14h12v12H14z" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" />
+                  <path
+                    d="M5 15V5h10M25 5h10v10M35 25v10H25M15 35H5V25"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M14 14h12v12H14z"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-dasharray="3 3"
+                  />
                 </svg>
                 <span>二维码</span>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </ShowcaseCard>
       ))}
     </div>
     <div class="contact-channels">
       <h3 class="contact-channels-title">其他联系渠道</h3>
       <div class="contact-channel-list">
         {contactChannels.map((channel) => (
-          <div class="contact-channel" aria-label={`${channel.label}${channel.placeholder}`}>
+          <div
+            class="contact-channel"
+            aria-label={`${channel.label}${channel.placeholder}`}
+          >
             <span>{channel.label}</span>
             <span>{channel.placeholder}</span>
           </div>
@@ -68,24 +94,109 @@ const contactChannels = [
 </section>
 
 <style is:global>
-  .join-label { color: var(--sec); font-size: 0.7rem; letter-spacing: 0.16em; }
-  .join-title { color: var(--white); font-size: 1.5rem; font-weight: 500; margin-top: 1rem; }
-  .join-description { color: var(--white-icon); line-height: 1.7; margin-top: 0.7rem; min-height: 3.4em; }
-  .join-card-header { display: flex; flex-direction: column; gap: 0; }
-  .join-card-content { margin-top: 1.5rem; }
-  .join-card-layout { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem; }
-  .join-qr-caption { max-width: 12em; color: var(--white-icon); font-size: 0.9rem; line-height: 1.7; }
-  .join-qr-placeholder { display: flex; width: 124px; aspect-ratio: 1; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem; border: 1px dashed color-mix(in srgb, var(--theme-primary) 42%, transparent); border-radius: 0.9rem; background: color-mix(in srgb, var(--theme-primary) 5%, transparent); color: var(--primary-soft); font-size: 0.75rem; }
-  .join-qr-placeholder svg { width: 2.25rem; height: 2.25rem; opacity: 0.8; }
-  .contact-channels { max-width: 900px; margin: 2rem auto 0; text-align: left; }
-  .contact-channels-title { margin-bottom: 0.75rem; color: var(--white-icon); font-size: 0.8rem; font-weight: 500; }
-  .contact-channel-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
-  .contact-channel { display: flex; min-width: 0; flex-direction: column; gap: 0.25rem; padding: 0.85rem 1rem; border: 1px solid var(--border-subtle); border-radius: 0.8rem; background: color-mix(in srgb, var(--card) 50%, transparent); }
-  .contact-channel span:first-child { color: var(--white); font-size: 0.85rem; }
-  .contact-channel span:last-child { color: var(--text-subtle); font-size: 0.75rem; }
+  .join-label {
+    color: var(--sec);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+  }
+  .join-title {
+    color: var(--white);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: 1rem;
+  }
+  .join-description {
+    color: var(--white-icon);
+    line-height: 1.7;
+    margin-top: 0.7rem;
+    min-height: 3.4em;
+  }
+  .join-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .join-card-content {
+    margin-top: 1.5rem;
+  }
+  .join-card-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+  }
+  .join-qr-caption {
+    max-width: 12em;
+    color: var(--white-icon);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .join-qr-placeholder {
+    display: flex;
+    width: 124px;
+    aspect-ratio: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border: 1px dashed color-mix(in srgb, var(--theme-primary) 42%, transparent);
+    border-radius: 0.9rem;
+    background: color-mix(in srgb, var(--theme-primary) 5%, transparent);
+    color: var(--primary-soft);
+    font-size: 0.75rem;
+  }
+  .join-qr-placeholder svg {
+    width: 2.25rem;
+    height: 2.25rem;
+    opacity: 0.8;
+  }
+  .contact-channels {
+    max-width: 900px;
+    margin: 2rem auto 0;
+    text-align: left;
+  }
+  .contact-channels-title {
+    margin-bottom: 0.75rem;
+    color: var(--white-icon);
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  .contact-channel-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .contact-channel {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.8rem;
+    background: color-mix(in srgb, var(--card) 50%, transparent);
+  }
+  .contact-channel span:first-child {
+    color: var(--white);
+    font-size: 0.85rem;
+  }
+  .contact-channel span:last-child {
+    color: var(--text-subtle);
+    font-size: 0.75rem;
+  }
   @media (max-width: 767px) {
-    .join-qr-placeholder { width: 96px; }
-    .contact-channel-list { grid-template-columns: 1fr; gap: 0.5rem; }
-    .contact-channel { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 0.75rem; }
+    .join-qr-placeholder {
+      width: 96px;
+    }
+    .contact-channel-list {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .contact-channel {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
   }
 </style>

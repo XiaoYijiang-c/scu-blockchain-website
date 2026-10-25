@@ -1,3 +1,5 @@
+import { animate } from "motion";
+
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 document.querySelectorAll<HTMLElement>("[data-gallery]").forEach((gallery) => {
@@ -20,10 +22,8 @@ document.querySelectorAll<HTMLElement>("[data-gallery]").forEach((gallery) => {
   if (!track || !cards.length) return;
 
   let frame = 0;
-  let drag: { id: number; x: number; scroll: number; moved: boolean } | null =
-    null;
-  let suppressClick = false;
   let activeIndex = 0;
+  let previousIndex: number | null = null;
   let selectedIndex: number | null = 0;
   const maxScroll = () => Math.max(0, track.scrollWidth - track.clientWidth);
   const cardLeft = (card: HTMLElement) =>
@@ -60,6 +60,18 @@ document.querySelectorAll<HTMLElement>("[data-gallery]").forEach((gallery) => {
     cards.forEach((card, index) => {
       card.dataset.active = String(index === activeIndex);
     });
+    if (
+      previousIndex !== null &&
+      activeIndex !== previousIndex &&
+      !reducedMotion.matches
+    ) {
+      animate(
+        cards[activeIndex],
+        { opacity: [0.72, 1], x: [20, 0], rotate: [2.5, 0], scale: [0.98, 1] },
+        { duration: 0.42, ease: [0.22, 1, 0.36, 1] },
+      );
+    }
+    previousIndex = activeIndex;
     if (previous) previous.disabled = activeIndex === 0;
     if (next) next.disabled = activeIndex === cards.length - 1;
   };
@@ -91,69 +103,7 @@ document.querySelectorAll<HTMLElement>("[data-gallery]").forEach((gallery) => {
     else step(event.key === "ArrowLeft" ? -1 : 1);
   });
 
-  // Native touch scrolling remains in charge on phones; mouse dragging starts
-  // only after a threshold, preserving ordinary profile-button clicks.
-  track.addEventListener("pointerdown", (event) => {
-    if (event.pointerType === "touch") selectedIndex = null;
-    if (event.pointerType !== "mouse" || event.button !== 0) return;
-    suppressClick = false;
-    drag = {
-      id: event.pointerId,
-      x: event.clientX,
-      scroll: track.scrollLeft,
-      moved: false,
-    };
-  });
-  track.addEventListener("pointermove", (event) => {
-    if (!drag || event.pointerId !== drag.id) return;
-    const distance = event.clientX - drag.x;
-    if (!drag.moved && Math.abs(distance) < 6) return;
-    if (!drag.moved) {
-      drag.moved = true;
-      selectedIndex = null;
-      track.setPointerCapture(event.pointerId);
-      track.classList.add("is-dragging");
-    }
-    track.scrollLeft = drag.scroll - distance;
-  });
-  const finishDrag = () => {
-    if (!drag) return;
-    const { moved, id } = drag;
-    drag = null;
-    suppressClick = moved;
-    if (track.hasPointerCapture(id)) track.releasePointerCapture(id);
-    track.classList.remove("is-dragging");
-    if (moved) {
-      const left = track.scrollLeft;
-      const stops = [
-        0,
-        ...cards.map(cardLeft).filter((position) => position < maxScroll()),
-        maxScroll(),
-      ];
-      scrollTo(
-        stops.reduce(
-          (best, stop) =>
-            Math.abs(stop - left) < Math.abs(best - left) ? stop : best,
-          0,
-        ),
-      );
-    }
-  };
-  track.addEventListener("pointerup", finishDrag);
-  track.addEventListener("pointercancel", finishDrag);
-  track.addEventListener("lostpointercapture", finishDrag);
-  window.addEventListener("pointerup", finishDrag);
-  window.addEventListener("blur", finishDrag);
-  track.addEventListener(
-    "click",
-    (event) => {
-      if (!suppressClick || event.detail === 0) return;
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      suppressClick = false;
-    },
-    true,
-  );
+  // Keep the vertical mouse wheel on the document. Touch swipes remain native.
   track.addEventListener("scroll", schedule, { passive: true });
   track.addEventListener(
     "wheel",

@@ -2,14 +2,51 @@
 import { ActivityCards } from "@/components/ActivityCards";
 import Members from "@/components/members.astro";
 import RoadmapStory from "@/components/ui/RoadmapStory.astro";
+import ShowcaseHeading from "@/components/ui/ShowcaseHeading.astro";
 
 const activities = [
-  { number: "01", title: "从入门到实践", text: "技术沙龙与 Workshop，面向零基础同学开展系统学习。", image: "/images/story/collaboration.jpg", imageLabel: "协作学习 · 主题配图" },
-  { number: "02", title: "项目底层拆解", text: "集体研读 DeFi 等标杆项目，理解协议机制与设计原理。", image: "/images/story/code-workspace.jpg", imageLabel: "代码工作台 · 主题配图" },
-  { number: "03", title: "链上投研与复盘", text: "围绕链上生态开展研究，产出研报、案例分析与复盘。", image: "/images/story/code-workspace.jpg", imageLabel: "技术研究 · 主题配图" },
-  { number: "04", title: "论文研读与科研", text: "跟进前沿论文，围绕区块链与 AI-Agent 交叉方向探索课题。", image: "/images/story/research-desk.jpg", imageLabel: "研究笔记 · 主题配图" },
-  { number: "05", title: "组队科创赛事", text: "常态化组队参与黑客松、AI-Agent 及其他科创赛事。", image: "/images/story/collaboration.jpg", imageLabel: "团队协作 · 主题配图" },
-  { number: "06", title: "连接开发者社群", text: "对接开发者社区，争取国内外赛事与技术交流机会。", image: "/images/story/collaboration.jpg", imageLabel: "开发者交流 · 主题配图" },
+  {
+    number: "01",
+    title: "从入门到实践",
+    text: "技术沙龙与 Workshop，面向零基础同学开展系统学习。",
+    image: "/images/story/collaboration.jpg",
+    imageLabel: "协作学习 · 主题配图",
+  },
+  {
+    number: "02",
+    title: "项目底层拆解",
+    text: "集体研读 DeFi 等标杆项目，理解协议机制与设计原理。",
+    image: "/images/story/code-workspace.jpg",
+    imageLabel: "代码工作台 · 主题配图",
+  },
+  {
+    number: "03",
+    title: "链上投研与复盘",
+    text: "围绕链上生态开展研究，产出研报、案例分析与复盘。",
+    image: "/images/story/code-workspace.jpg",
+    imageLabel: "技术研究 · 主题配图",
+  },
+  {
+    number: "04",
+    title: "论文研读与科研",
+    text: "跟进前沿论文，围绕区块链与 AI-Agent 交叉方向探索课题。",
+    image: "/images/story/research-desk.jpg",
+    imageLabel: "研究笔记 · 主题配图",
+  },
+  {
+    number: "05",
+    title: "组队科创赛事",
+    text: "常态化组队参与黑客松、AI-Agent 及其他科创赛事。",
+    image: "/images/story/collaboration.jpg",
+    imageLabel: "团队协作 · 主题配图",
+  },
+  {
+    number: "06",
+    title: "连接开发者社群",
+    text: "对接开发者社区，争取国内外赛事与技术交流机会。",
+    image: "/images/story/collaboration.jpg",
+    imageLabel: "开发者交流 · 主题配图",
+  },
 ];
 
 const roadmap = [
@@ -22,22 +59,38 @@ const roadmap = [
 ];
 ---
 
-<section id="activities" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="activities-title">
+<section
+  id="activities"
+  class="showcase-section w-full border-t border-border"
+  aria-labelledby="activities-title"
+>
   <div class="max-w-5xl mx-auto">
-    <p class="section-kicker">LEARN · RESEARCH · BUILD</p>
-    <h2 id="activities-title" class="section-title">我们在做什么</h2>
-    <p class="section-intro">从基础学习到真实项目，从研究讨论到赛事协作，让想法在实践中生长。</p>
-    <ActivityCards activities={activities} client:visible />
+    <ShowcaseHeading
+      id="activities-title"
+      kicker="LEARN · RESEARCH · BUILD"
+      title="我们在做什么"
+      intro="从基础学习到真实项目，从研究讨论到赛事协作，让想法在实践中生长。"
+    />
+    <div class="showcase-content" data-motion-item>
+      <ActivityCards activities={activities} client:visible />
+    </div>
   </div>
 </section>
 
 <Members />
 
-<section id="roadmap" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="roadmap-title">
+<section
+  id="roadmap"
+  class="showcase-section w-full border-t border-border"
+  aria-labelledby="roadmap-title"
+>
   <div class="max-w-5xl mx-auto">
-    <p class="section-kicker">GROW WITH PURPOSE</p>
-    <h2 id="roadmap-title" class="section-title">发展规划</h2>
-    <p class="section-intro">把短期活动沉淀为长期能力，让社团建设能够持续、协作、可传承。</p>
+    <ShowcaseHeading
+      id="roadmap-title"
+      kicker="GROW WITH PURPOSE"
+      title="发展规划"
+      intro="把短期活动沉淀为长期能力，让社团建设能够持续、协作、可传承。"
+    />
     <RoadmapStory items={roadmap} />
   </div>
 </section>
@@ -67,14 +120,20 @@ const roadmap = [
     border-radius: 1.15rem;
     min-height: 190px;
     padding: 1.35rem;
-    transition: border-color 200ms ease, transform 200ms ease;
+    transition:
+      border-color 200ms ease,
+      transform 200ms ease;
   }
   .info-card:hover {
     border-color: color-mix(in srgb, var(--theme-primary) 43.9%, transparent);
     transform: translateY(-3px);
   }
   @media (prefers-reduced-motion: reduce) {
-    .info-card { transition: none; }
-    .info-card:hover { transform: none; }
+    .info-card {
+      transition: none;
+    }
+    .info-card:hover {
+      transform: none;
+    }
   }
 </style>

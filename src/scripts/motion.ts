@@ -126,6 +126,55 @@ function setupMotion() {
 
   const cleanups: (() => void)[] = [];
   cleanups.push(setupPointerTilt());
+  // Map native document progress to decorative offsets; never consume wheel input.
+  // Reference concepts: JIEJOE 007-02 scroll follow and 020 window blinds.
+  const scenes = [
+    ...document.querySelectorAll<HTMLElement>(".showcase-section"),
+  ];
+  const visibleScenes = new Set<HTMLElement>();
+  let sceneFrame = 0;
+  const updateScenes = () => {
+    sceneFrame = 0;
+    visibleScenes.forEach((scene) => {
+      const rect = scene.getBoundingClientRect();
+      const progress = Math.max(
+        0,
+        Math.min(1, (innerHeight - rect.top) / (innerHeight + rect.height)),
+      );
+      scene.style.setProperty("--scene-progress", progress.toFixed(3));
+      scene.style.setProperty(
+        "--scene-drift",
+        `${((progress - 0.5) * (innerWidth < 768 ? 12 : 32)).toFixed(2)}px`,
+      );
+    });
+  };
+  const scheduleScenes = () => {
+    if (!sceneFrame) sceneFrame = requestAnimationFrame(updateScenes);
+  };
+  const sceneObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const scene = entry.target as HTMLElement;
+        if (entry.isIntersecting) visibleScenes.add(scene);
+        else visibleScenes.delete(scene);
+      });
+      scheduleScenes();
+    },
+    { rootMargin: "120px" },
+  );
+  scenes.forEach((scene) => sceneObserver.observe(scene));
+  window.addEventListener("scroll", scheduleScenes, { passive: true });
+  window.addEventListener("resize", scheduleScenes);
+  cleanups.push(() => {
+    sceneObserver.disconnect();
+    cancelAnimationFrame(sceneFrame);
+    window.removeEventListener("scroll", scheduleScenes);
+    window.removeEventListener("resize", scheduleScenes);
+    scenes.forEach((scene) => {
+      scene.style.removeProperty("--scene-progress");
+      scene.style.removeProperty("--scene-drift");
+    });
+  });
   const animated = new Set<HTMLElement>();
   const animations: ReturnType<typeof animate>[] = [];
   const reveal = (element: HTMLElement, delay = 0) => {
@@ -133,7 +182,13 @@ function setupMotion() {
     animations.push(
       animate(
         element,
-        { opacity: [0, 1], y: [18, 0] },
+        element.matches(".section-title")
+          ? {
+              opacity: [0, 1],
+              y: [24, 0],
+              clipPath: ["inset(0 0 100% 0)", "inset(0 0 0% 0)"],
+            }
+          : { opacity: [0, 1], y: [18, 0] },
         {
           duration: 0.65,
           delay,
@@ -147,19 +202,17 @@ function setupMotion() {
     .querySelectorAll<HTMLElement>("[data-reveal]")
     .forEach((element, index) => reveal(element, index * 0.07));
   document
-    .querySelectorAll<HTMLElement>("main section:not(.hero)")
-    .forEach((section) => {
+    .querySelectorAll<HTMLElement>(
+      ".section-kicker, .section-title, .section-intro, [data-motion-item], .gallery-card, .roadmap-step",
+    )
+    .forEach((element) => {
       cleanups.push(
         inView(
-          section,
+          element,
           () => {
-            section
-              .querySelectorAll<HTMLElement>(
-                ".section-kicker, .section-title, .section-intro, .info-card, .gallery-card, .roadmap-step, .partner-panel, .alliance-panel, .archive-type, .resource-card, .join-card",
-              )
-              .forEach((element, index) =>
-                reveal(element, Math.min(index * 0.055, 0.3)),
-              );
+            const siblings = element.parentElement?.children;
+            const index = siblings ? Array.from(siblings).indexOf(element) : 0;
+            reveal(element, Math.min(index * 0.055, 0.22));
           },
           { margin: "0px 0px -40px 0px" },
         ),
@@ -241,32 +294,28 @@ function setupMotion() {
           element.removeEventListener("pointerdown", reset);
         });
       });
-    document
-      .querySelectorAll<HTMLElement>(
-        ".info-card, .partner-panel, .join-card, .gallery-card",
-      )
-      .forEach((card) => {
-        let frame = 0;
-        const move = (event: PointerEvent) => {
-          cancelAnimationFrame(frame);
-          frame = requestAnimationFrame(() => {
-            const bounds = card.getBoundingClientRect();
-            card.style.setProperty(
-              "--pointer-x",
-              `${event.clientX - bounds.left}px`,
-            );
-            card.style.setProperty(
-              "--pointer-y",
-              `${event.clientY - bounds.top}px`,
-            );
-          });
-        };
-        card.addEventListener("pointermove", move, { passive: true });
-        cleanups.push(() => {
-          cancelAnimationFrame(frame);
-          card.removeEventListener("pointermove", move);
+    document.querySelectorAll<HTMLElement>(".showcase-card").forEach((card) => {
+      let frame = 0;
+      const move = (event: PointerEvent) => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          const bounds = card.getBoundingClientRect();
+          card.style.setProperty(
+            "--pointer-x",
+            `${event.clientX - bounds.left}px`,
+          );
+          card.style.setProperty(
+            "--pointer-y",
+            `${event.clientY - bounds.top}px`,
+          );
         });
+      };
+      card.addEventListener("pointermove", move, { passive: true });
+      cleanups.push(() => {
+        cancelAnimationFrame(frame);
+        card.removeEventListener("pointermove", move);
       });
+    });
   }
 
   document
@@ -293,6 +342,7 @@ function setupMotion() {
     animated.forEach((element) => {
       element.style.removeProperty("opacity");
       element.style.removeProperty("transform");
+      element.style.removeProperty("clip-path");
     });
   };
 }

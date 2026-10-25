@@ -1,42 +1,103 @@
----
-import { Card, CardContent } from "@/components/ui/card";
-
+﻿---
+import ShowcaseHeading from "@/components/ui/ShowcaseHeading.astro";
+import ShowcaseCard from "@/components/ui/ShowcaseCard.astro";
 const archiveTypes = ["招新", "主题讲座", "技术沙龙", "Workshop", "参赛纪实"];
-const resourceTypes = ["入门路线", "分享课件", "项目解析", "研究报告", "备赛资料", "论文清单"];
+const resourceTypes = [
+  "入门路线",
+  "分享课件",
+  "项目解析",
+  "研究报告",
+  "备赛资料",
+  "论文清单",
+];
 ---
 
-<section id="archive" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="archive-title">
+<section
+  id="archive"
+  class="showcase-section w-full border-t border-border"
+  aria-labelledby="archive-title"
+>
   <div class="max-w-5xl mx-auto">
-    <p class="section-kicker">RECAP · DOCUMENT · REVISIT</p>
-    <h2 id="archive-title" class="section-title">活动回顾</h2>
-    <p class="section-intro">记录社团的学习、分享与实践。活动图文和讲义将逐步整理归档。</p>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+    <ShowcaseHeading
+      id="archive-title"
+      kicker="RECAP · DOCUMENT · REVISIT"
+      title="活动回顾"
+      intro="记录社团的学习、分享与实践。活动图文和讲义将逐步整理归档。"
+    />
+    <ol class="archive-shelf showcase-content" aria-label="活动归档分类">
       {archiveTypes.map((type, index) => (
-        <Card className="archive-type" data-pointer-tilt="card"><CardContent className="flex flex-col p-0"><span class="text-xs text-[var(--sec)]">0{index + 1}</span><span class="mt-3 font-medium text-[var(--white)]">{type}</span></CardContent></Card>
+        <li
+          data-motion-item
+          style={`--shelf-offset:${index % 2 === 0 ? -1 : 1}`}
+        >
+          <ShowcaseCard class="archive-type">
+            <div class="panel-caption">
+              <span>ARCHIVE / 0{index + 1}</span>
+              <span aria-hidden="true">＋</span>
+            </div>
+            <div class="archive-art" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <b>0{index + 1}</b>
+            </div>
+            <div class="archive-copy">
+              <h3>{type}</h3>
+              <span class="showcase-note">待归档</span>
+            </div>
+          </ShowcaseCard>
+        </li>
       ))}
-    </div>
-    <div class="mt-5 rounded-xl border border-dashed border-[var(--white-icon-tr)] px-5 py-6 text-center text-sm text-[var(--white-icon)]" role="status">
-      活动存档正在整理中 · 后续将在此更新图文纪实与讲义下载
-    </div>
+    </ol>
+    <p class="showcase-status" role="status">
+      <span class="status-dot" aria-hidden="true"></span>活动存档正在整理中 ·
+      后续将在此更新图文纪实与讲义下载
+    </p>
   </div>
 </section>
-
-<section id="resources" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="resources-title">
+<section
+  id="resources"
+  class="showcase-section w-full border-t border-border"
+  aria-labelledby="resources-title"
+>
   <div class="max-w-5xl mx-auto">
-    <p class="section-kicker">LEARNING RESOURCE CENTER</p>
-    <h2 id="resources-title" class="section-title">学习资源中心</h2>
-    <p class="section-intro">沉淀从入门学习到前沿研究、从项目理解到赛事准备的共享资料。</p>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-      {resourceTypes.map((type, index) => (
-        <Card className="resource-card" data-pointer-tilt="card"><CardContent className="flex w-full items-center gap-3 p-0"><span class="resource-index">/{String(index + 1).padStart(2, "0")}</span><span class="text-[var(--white)]">{type}</span><span class="ml-auto text-[var(--white-icon)]" aria-hidden="true">↗</span></CardContent></Card>
-      ))}
+    <ShowcaseHeading
+      id="resources-title"
+      kicker="LEARNING RESOURCE CENTER"
+      title="学习资源中心"
+      intro="沉淀从入门学习到前沿研究、从项目理解到赛事准备的共享资料。"
+    />
+    <div class="resource-library showcase-content">
+      <div class="resource-cover" data-motion-item>
+        <span class="panel-caption">OPEN KNOWLEDGE / SCU</span>
+        <div class="resource-volumes" data-scroll-art aria-hidden="true">
+          {[0, 1, 2, 3].map((index) => (
+            <span style={`--volume:${index}`}></span>
+          ))}
+        </div>
+        <span class="resource-cover-title" aria-hidden="true">
+          LEARN.
+          <br />
+          BUILD.
+          <br />
+          SHARE.
+        </span>
+      </div>
+      <ol class="resource-list" aria-label="学习资料分类">
+        {resourceTypes.map((type, index) => (
+          <li class="resource-row" data-motion-item>
+            <span class="resource-index">
+              /{String(index + 1).padStart(2, "0")}
+            </span>
+            <h3>{type}</h3>
+            <span class="resource-state">整理中</span>
+            <span class="resource-line" aria-hidden="true"></span>
+          </li>
+        ))}
+      </ol>
     </div>
-    <p class="mt-5 text-center text-xs text-[var(--white-icon)]">资料库内容持续建设中，公开资料与下载入口将在整理完成后补充。</p>
+    <p class="showcase-status">
+      资料库内容持续建设中，公开资料与下载入口将在整理完成后补充。
+    </p>
   </div>
 </section>
-
-<style is:global>
-  .archive-type { min-height: 112px; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--white-icon-tr); border-radius: 0.9rem; background: color-mix(in srgb, var(--card) 61.2%, transparent); padding: 1rem; }
-  .resource-card { display: flex; align-items: center; gap: 0.8rem; min-height: 64px; border: 1px solid var(--white-icon-tr); border-radius: 0.8rem; background: color-mix(in srgb, var(--card) 61.2%, transparent); padding: 0.85rem; font-size: 0.875rem; }
-  .resource-index { color: var(--sec); font-size: 0.7rem; letter-spacing: 0.08em; }
-</style>

@@ -1,32 +1,29 @@
 ---
 import ActivityGallery from "@/components/ui/ActivityGallery.astro";
 import MemberPortrait from "@/components/ui/MemberPortrait.astro";
+import ShowcaseHeading from "@/components/ui/ShowcaseHeading.astro";
+import ShowcaseCard from "@/components/ui/ShowcaseCard.astro";
 import { members } from "@/data/members";
 ---
 
 <section
   id="members"
-  class="w-full border-t border-border"
+  class="showcase-section w-full border-t border-border"
   aria-labelledby="members-title"
 >
   <div class="max-w-5xl mx-auto">
-    <div class="members-heading">
-      <div>
-        <p class="section-kicker">THE PEOPLE BEHIND THE BLOCKS</p>
-        <h2 id="members-title" class="section-title">
-          认识我们的成员
-          <span class="members-title-dot" aria-hidden="true">
-            .
-          </span>
-        </h2>
-        <p class="section-intro">每一个独特的你，都是连接未来的节点。</p>
-      </div>
+    <ShowcaseHeading
+      id="members-title"
+      kicker="THE PEOPLE BEHIND THE BLOCKS"
+      title="认识我们的成员"
+      intro="每一个独特的你，都是连接未来的节点。"
+    >
       <p class="members-note">
         <span class="status-dot" aria-hidden="true"></span> 成员资料待补充
         <br />
         <span>头像为原创风格插图</span>
       </p>
-    </div>
+    </ShowcaseHeading>
 
     <ActivityGallery
       id="member-gallery"
@@ -39,7 +36,7 @@ import { members } from "@/data/members";
           data-gallery-card
           data-active={index === 0 ? "true" : "false"}
         >
-          <article
+          <ShowcaseCard
             class="member-card"
             aria-labelledby={`member-name-${member.id}`}
           >
@@ -73,7 +70,7 @@ import { members } from "@/data/members";
                 <span aria-hidden="true">↗</span>
               </button>
             </div>
-          </article>
+          </ShowcaseCard>
         </li>
       ))}
     </ActivityGallery>

@@ -1,6 +1,6 @@
-/* Document-level snapping preserves native wheel, touch and keyboard scrolling. */
+/* Native document scrolling avoids snapping small wheel gestures back to a section. */
 html:root {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: none;
   scroll-padding-top: 0;
 }
 main section[id] {
@@ -74,9 +74,6 @@ body > footer {
   }
 }
 @media (max-width: 767px) {
-  html:root {
-    scroll-snap-type: y proximity;
-  }
   main .hero {
     padding-top: max(24px, env(safe-area-inset-top));
     padding-bottom: calc(80px + env(safe-area-inset-bottom));
@@ -143,7 +140,17 @@ body main {
   max-width: none;
 }
 main section[id] > .max-w-5xl {
-  max-width: none;
+  max-width: 1600px;
+}
+/* Compact showcase sections retain native document scrolling. */
+main section[id].showcase-section {
+  min-height: auto;
+  display: block;
+  padding-top: clamp(40px, 6vh, 68px);
+  padding-bottom: clamp(28px, 4vh, 48px);
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+  scroll-margin-top: 5rem;
 }
 main .hero-grid {
   inset-inline: 0;
@@ -202,7 +209,7 @@ main .hero-grid {
   }
   main .direction-item > span,
   main .direction-caption {
-    font-size: clamp(10px, 0.75vw, 22px);
+    font-size: clamp(10px, 0.75vw, 14px);
   }
   #main-nav {
     width: clamp(680px, 48vw, 1560px);
@@ -213,38 +220,14 @@ main .hero-grid {
     padding: 0.7em 1em;
   }
   main .section-title {
-    font-size: clamp(38px, 3vw, 100px);
+    font-size: clamp(34px, 3vw, 64px);
   }
   main .section-kicker {
-    font-size: clamp(10px, 0.75vw, 22px);
+    font-size: clamp(10px, 0.75vw, 14px);
   }
   main .section-intro {
     max-width: 42em;
-    font-size: clamp(15px, 1.05vw, 28px);
-  }
-  main .info-card,
-  main .partner-panel,
-  main .join-card {
-    padding: clamp(28px, 2.3vw, 76px);
-  }
-  main .info-card h3,
-  main .join-card h3 {
-    font-size: clamp(20px, 1.5vw, 44px);
-  }
-  main .info-card p,
-  main .partner-row,
-  main .roadmap-item,
-  main .join-card p {
-    font-size: clamp(14px, 1vw, 28px);
-  }
-  main .info-card {
-    min-height: clamp(226px, 16vw, 530px);
-  }
-  main .info-card p {
-    max-width: 32em;
-  }
-  main #join .join-grid {
-    max-width: min(100%, 1800px);
+    font-size: clamp(15px, 1.05vw, 19px);
   }
 }
 @media (max-width: 767px) {
@@ -299,22 +282,96 @@ main .hero-grid {
 
 /* Story modules keep the reading order and native touch scrolling on small screens. */
 @media (min-width: 768px) and (max-width: 1023px) {
-  main .roadmap-story {
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-    gap: clamp(20px, 3vw, 36px);
+  main .archive-shelf {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  main .roadmap-visual {
-    min-height: 460px;
-    padding-inline: 18px;
-  }
-  main .roadmap-map {
-    max-height: 320px;
+  main .roadmap-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   main .gallery-card {
-    flex-basis: clamp(290px, 42vw, 380px);
+    flex-basis: clamp(270px, 25vw, 390px);
   }
 }
 @media (max-width: 767px) {
+  main .partner-grid,
+  main .join-grid,
+  main .alliance-panel,
+  main .resource-library {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  main section[id].showcase-section {
+    scroll-margin-top: 0;
+  }
+  main .archive-shelf {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  main .archive-type {
+    padding: 14px;
+    transform: none;
+  }
+  .archive-art {
+    height: 130px;
+  }
+  .archive-shelf .panel-caption {
+    font-size: 8px;
+    gap: 4px;
+  }
+  .archive-copy h3 {
+    font-size: 16px;
+  }
+  .archive-shelf > li:last-child {
+    grid-column: 1 / -1;
+  }
+  .archive-shelf > li:last-child .archive-type {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .archive-shelf > li:last-child .archive-art {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+  }
+  .archive-shelf > li:last-child .panel-caption {
+    display: none;
+  }
+  .archive-shelf > li:last-child .archive-copy {
+    border: 0;
+    padding: 0;
+  }
+  main .alliance-panel {
+    gap: 12px;
+  }
+  main .alliance-network .network-scene {
+    max-width: 300px;
+  }
+  .resource-cover {
+    min-height: 230px;
+  }
+  .resource-cover-title {
+    margin-top: 24px;
+    font-size: 40px;
+  }
+  .resource-volumes {
+    height: 68%;
+    width: 36%;
+    bottom: 10%;
+    right: 10%;
+  }
+  .resource-row {
+    gap: 14px;
+  }
+  .showcase-status {
+    align-items: flex-start;
+  }
+  .showcase-status .status-dot {
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .hero-orbit > span {
+    font-size: 7px;
+  }
   main .gallery-toolbar {
     align-items: flex-end;
   }
@@ -343,9 +400,9 @@ main .hero-grid {
     scroll-snap-align: start;
   }
   main .gallery-copy {
-    padding: 20px;
+    padding: 16px 18px;
   }
-  main .members-heading {
+  main .showcase-heading {
     display: block;
   }
   main .members-note {
@@ -393,33 +450,78 @@ main .hero-grid {
   .profile-content {
     padding: 24px;
   }
-  main .roadmap-story {
+  main .roadmap-steps {
     grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-  }
-  main .roadmap-visual {
-    position: relative;
-    top: auto;
-    order: -1;
-    min-height: 0;
-    aspect-ratio: 1.08;
-    padding: 18px 16px 22px;
-  }
-  main .roadmap-map {
-    width: min(100%, 330px);
-    max-height: none;
-    margin: -2px auto;
+    gap: 12px;
   }
   main .roadmap-step {
-    grid-template-columns: 32px minmax(0, 1fr) 18px;
-    gap: 10px;
-    padding: 14px 10px;
+    padding: 18px 20px;
   }
-  main .roadmap-step-copy strong {
-    font-size: 14px;
+}
+@media (max-height: 900px) {
+  main section[id].showcase-section {
+    padding-top: 40px;
+    padding-bottom: 28px;
   }
-  main .roadmap-step-copy > span {
-    font-size: 12px;
+  main #members .activity-gallery {
+    margin-top: 20px;
+  }
+  main #members .gallery-track {
+    padding-top: 4px;
+    padding-bottom: 14px;
+  }
+  main #members .gallery-copy h3 {
+    margin-top: 10px;
+  }
+  main #members .member-bio {
+    margin-top: 10px;
+  }
+  main #members .member-profile-button {
+    min-height: 42px;
+    margin-top: 14px;
+    padding-top: 8px;
+  }
+  main #members .members-footer {
+    margin-top: 12px;
+  }
+}
+@media (min-width: 768px) and (max-height: 850px) {
+  main #members {
+    padding-top: 28px;
+  }
+  main #members .member-portrait {
+    height: 132px;
+    aspect-ratio: auto;
+  }
+  main #members .section-intro {
+    margin-top: 12px;
+  }
+  main #members .activity-gallery {
+    margin-top: 12px;
+  }
+  main #members .gallery-toolbar {
+    margin-bottom: 10px;
+  }
+  main #members .gallery-copy {
+    padding: 14px;
+  }
+  main .alliance-network .network-scene {
+    max-width: 400px;
+  }
+  main .alliance-panel {
+    padding-block: 26px;
+  }
+  main .join-card {
+    padding: 24px;
+  }
+  main .join-card .join-description {
+    min-height: 0;
+  }
+  main .join-qr-placeholder {
+    width: 96px;
+  }
+  main .contact-channels {
+    margin-top: 20px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -428,14 +530,19 @@ main .hero-grid {
   }
   .member-portrait img,
   .portrait-network path,
-  main .member-card,
+  main .showcase-card,
   main .gallery-progress span,
   [data-magnetic]::after,
   main .gallery-arrow,
-  main .roadmap-step,
-  main .roadmap-step-mark,
-  main .roadmap-node circle,
-  main .roadmap-node text {
+  main .showcase-card::before,
+  .archive-art > span,
+  .resource-line,
+  .resource-row h3,
+  .partner-tag,
+  .row-arrow,
+  .activity-card-top svg,
+  main .roadmap-emblem,
+  main .roadmap-card-line {
     transition: none;
   }
   .member-portrait img {
@@ -447,7 +554,11 @@ main .hero-grid {
   [data-magnetic]::after {
     transform: none;
   }
-  main .roadmap-route {
-    animation: none;
+  main .roadmap-step:hover .roadmap-emblem {
+    transform: none;
+  }
+  [data-scroll-art],
+  main .archive-type {
+    transform: none;
   }
 }

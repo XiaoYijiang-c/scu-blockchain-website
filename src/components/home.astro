@@ -21,10 +21,10 @@ const logoDepth = Array.from({ length: 20 }, (_, index) => index + 1);
         交叉方向，打造西南高校青年技术交流平台，欢迎所有保有好奇心的同学。
       </p>
       <div class="hero-actions" data-reveal>
-        <a href="#join" class="button-primary">
+        <a href="#join" class="button-primary" data-magnetic>
           加入我们 <span aria-hidden="true">↗</span>
         </a>
-        <a href="#activities" class="button-secondary">
+        <a href="#activities" class="button-secondary" data-magnetic>
           探索社团 <span aria-hidden="true">→</span>
         </a>
       </div>
@@ -33,10 +33,27 @@ const logoDepth = Array.from({ length: 20 }, (_, index) => index + 1);
       </p>
     </div>
     <div class="hero-art">
-      <div class="logo-stage" data-pointer-tilt="logo" role="group" tabindex="0" aria-label="可交互的四川大学区块链协会立体标志。移动鼠标调整角度，按住拖动旋转，也可使用方向键。">
-        <div class="logo-sculpture" role="img" aria-label="四川大学区块链协会标志">
+      <div class="hero-orbit" aria-hidden="true">
+        <span>SCU / CONNECT · CREATE</span>
+      </div>
+      <div
+        class="logo-stage"
+        data-pointer-tilt="logo"
+        role="group"
+        tabindex="0"
+        aria-label="可交互的四川大学区块链协会立体标志。移动鼠标调整角度，按住拖动旋转，也可使用方向键。"
+      >
+        <div
+          class="logo-sculpture"
+          role="img"
+          aria-label="四川大学区块链协会标志"
+        >
           {logoDepth.map((depth) => (
-            <span class="logo-depth" style={`--depth: ${depth}px`} aria-hidden="true" />
+            <span
+              class="logo-depth"
+              style={`--depth: ${depth}px`}
+              aria-hidden="true"
+            />
           ))}
           <span class="logo-face" set:html={logoMarkSvg} aria-hidden="true" />
         </div>

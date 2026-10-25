@@ -1,7 +1,7 @@
----
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+﻿---
+import ShowcaseHeading from "@/components/ui/ShowcaseHeading.astro";
+import ShowcaseCard from "@/components/ui/ShowcaseCard.astro";
 import NetworkVisual from "@/components/NetworkVisual.astro";
-
 const contributions = [
   "跨学科青年科创人才",
   "技术与投研科普内容产出",
@@ -9,83 +9,101 @@ const contributions = [
   "西南高校社团联动渠道",
   "联合科研与赛事备赛共建",
 ];
-const partners = ["高校科创社团", "科研机构", "技术团队", "科创平台", "赛事主办方", "技术社群"];
+const partners = [
+  "高校科创社团",
+  "科研机构",
+  "技术团队",
+  "科创平台",
+  "赛事主办方",
+  "技术社群",
+];
 ---
 
-<section id="partnership" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="partnership-title">
+<section
+  id="partnership"
+  class="showcase-section w-full border-t border-border"
+  aria-labelledby="partnership-title"
+>
   <div class="max-w-5xl mx-auto">
-    <p class="section-kicker">BUILD TOGETHER</p>
-    <h2 id="partnership-title" class="section-title">寻求合作 <span class="text-[var(--white-icon)]">/ 共建伙伴</span></h2>
-    <p class="section-intro">期待与高校、科研机构和技术社区携手，让跨学科想法连接真实问题与实践机会。</p>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <Card className="partner-panel" data-pointer-tilt="card">
-        <CardHeader className="p-0">
-        <p class="text-sm tracking-[0.12em] text-[var(--sec)]">WHAT WE BRING</p>
-        <CardTitle className="mt-3 text-2xl font-medium text-[var(--white)]">我方可提供</CardTitle>
-        </CardHeader>
-        <CardContent className="p-0">
-        <ul class="mt-6 flex flex-col gap-3">
-          {contributions.map((item) => <li class="partner-row"><span class="partner-check" aria-hidden="true">↗</span>{item}</li>)}
+    <ShowcaseHeading
+      id="partnership-title"
+      kicker="BUILD TOGETHER"
+      title="寻求合作 / 共建伙伴"
+      intro="期待与高校、科研机构和技术社区携手，让跨学科想法连接真实问题与实践机会。"
+    />
+    <div class="partner-grid showcase-content">
+      <ShowcaseCard class="partner-panel" data-motion-item>
+        <div class="panel-caption">
+          <span>WHAT WE BRING</span>
+          <span aria-hidden="true">01 / ↗</span>
+        </div>
+        <h3>我方可提供</h3>
+        <ul class="partner-list">
+          {contributions.map((item, index) => (
+            <li class="partner-row">
+              <span class="partner-check" aria-hidden="true">
+                0{index + 1}
+              </span>
+              <span>{item}</span>
+              <span class="row-arrow" aria-hidden="true">
+                ↗
+              </span>
+            </li>
+          ))}
         </ul>
-        </CardContent>
-      </Card>
-      <Card className="partner-panel partner-panel-accent" data-pointer-tilt="card">
-        <CardHeader className="p-0">
-        <p class="text-sm tracking-[0.12em] text-[var(--sec)]">WHO WE HOPE TO MEET</p>
-        <CardTitle className="mt-3 text-2xl font-medium text-[var(--white)]">期望合作方</CardTitle>
-        </CardHeader>
-        <CardContent className="p-0">
-        <ul class="mt-6 flex flex-wrap gap-2">
-          {partners.map((item) => <li class="partner-tag">{item}</li>)}
+      </ShowcaseCard>
+      <ShowcaseCard class="partner-panel partner-panel-accent" data-motion-item>
+        <div class="panel-caption">
+          <span>WHO WE HOPE TO MEET</span>
+          <span aria-hidden="true">02 / ↙</span>
+        </div>
+        <h3>期望合作方</h3>
+        <ul class="partner-tags">
+          {partners.map((item) => (
+            <li class="partner-tag">{item}</li>
+          ))}
         </ul>
-        <p class="mt-8 text-sm leading-relaxed text-[var(--white-icon)]">联合分享、科研探索、赛事备战与校园活动，都欢迎交流共建。</p>
-        </CardContent>
-      </Card>
+        <p class="panel-description">
+          联合分享、科研探索、赛事备战与校园活动，都欢迎交流共建。
+        </p>
+        <a class="showcase-link" href="#join" data-magnetic>
+          交流共建 <span aria-hidden="true">↗</span>
+        </a>
+      </ShowcaseCard>
     </div>
   </div>
 </section>
-
-<section id="alliance" class="w-full py-14 md:py-20 border-t border-border" aria-labelledby="alliance-title">
+<section
+  id="alliance"
+  class="showcase-section w-full border-t border-border"
+  aria-labelledby="alliance-title"
+>
   <div class="max-w-5xl mx-auto">
-    <p class="section-kicker">SOUTHWEST UNIVERSITY NETWORK</p>
-    <div class="alliance-panel">
-      <div class="max-w-3xl">
-        <p class="text-sm tracking-[0.16em] text-[var(--sec)]">OPEN INVITATION · 共建倡议</p>
-        <h2 id="alliance-title" class="mt-4 text-3xl md:text-5xl font-medium leading-tight text-[var(--white)]">西南高校区块链联盟</h2>
-        <p class="mt-5 text-[var(--white-icon)] leading-relaxed md:text-lg">倡议组建西南高校区块链联盟，连接川内高校相关科创社团，推动资源共享、跨校联合备赛与联合技术分享，共建西南青年科创生态。</p>
-        <p class="mt-6 text-sm text-[var(--white-icon)]">意向伙伴：电子科技大学、成都信息工程大学及川内各高校相关科创社团</p>
-        <p class="mt-2 text-xs text-[var(--white-icon)]/70">以上为共建意向，不代表相关学校或社团已确认加入。</p>
+    <ShowcaseHeading
+      id="alliance-title"
+      kicker="SOUTHWEST UNIVERSITY NETWORK"
+      title="西南高校区块链联盟"
+      intro="倡议组建西南高校区块链联盟，连接川内高校相关科创社团，推动资源共享、跨校联合备赛与联合技术分享，共建西南青年科创生态。"
+    />
+    <ShowcaseCard class="alliance-panel showcase-content" data-motion-item>
+      <div class="alliance-copy">
+        <p class="panel-caption">OPEN INVITATION · 共建倡议</p>
+        <div class="alliance-wordmark" aria-hidden="true">
+          CONNECT<span>THE NEXT.</span>
+        </div>
+        <p class="panel-description">
+          意向伙伴：电子科技大学、成都信息工程大学及川内各高校相关科创社团
+        </p>
+        <p class="showcase-note">
+          以上为共建意向，不代表相关学校或社团已确认加入。
+        </p>
+        <a class="showcase-link" href="#join" data-magnetic>
+          参与共建 <span aria-hidden="true">↗</span>
+        </a>
       </div>
-      <div class="alliance-network" aria-hidden="true"><NetworkVisual /></div>
-    </div>
+      <div class="alliance-network" data-scroll-art aria-hidden="true">
+        <NetworkVisual />
+      </div>
+    </ShowcaseCard>
   </div>
 </section>
-
-<style is:global>
-  .partner-panel {
-    border: 1px solid var(--white-icon-tr);
-    border-radius: 1.2rem;
-    background: color-mix(in srgb, var(--card) 61.2%, transparent);
-    padding: clamp(1.25rem, 4vw, 2rem);
-  }
-  .partner-panel-accent { background: radial-gradient(ellipse at top right, color-mix(in srgb, var(--theme-primary) 7.8%, transparent), transparent 60%), color-mix(in srgb, var(--card) 61.2%, transparent); }
-  .partner-row { display: flex; align-items: flex-start; gap: 0.8rem; color: var(--white-icon); line-height: 1.6; }
-  .partner-check { color: var(--sec); }
-  .partner-tag { border: 1px solid var(--white-icon-tr); border-radius: 999px; padding: 0.55rem 0.85rem; color: var(--white-icon); font-size: 0.875rem; }
-  .alliance-panel {
-    position: relative;
-    overflow: hidden;
-    min-height: 320px;
-    display: flex;
-    align-items: center;
-    border: 1px solid color-mix(in srgb, var(--theme-primary) 25.1%, transparent);
-    border-radius: 1.5rem;
-    padding: clamp(1.5rem, 5vw, 3rem);
-    background: radial-gradient(ellipse at 85% 50%, color-mix(in srgb, var(--theme-primary) 12.5%, transparent), transparent 38%), linear-gradient(135deg, var(--surface-raised), var(--card));
-  }
-  .alliance-network { position: absolute; right: 2%; top: 50%; width: 34%; transform: translateY(-50%); opacity: 0.62; }
-  .alliance-network .network-scene { width: 100%; }
-  .alliance-network .network-label { display: none; }
-  @media (max-width: 767px) { .alliance-network { opacity: 0.16; right: -5%; width: 48%; } }
-</style>

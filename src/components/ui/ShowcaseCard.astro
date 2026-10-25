@@ -1,0 +1,9 @@
+---
+import type { HTMLAttributes } from "astro/types";
+type Props = HTMLAttributes<"article">;
+const { class: className, ...attributes } = Astro.props as Props;
+---
+
+<article class:list={["showcase-card", className]} {...attributes}>
+  <slot />
+</article>
