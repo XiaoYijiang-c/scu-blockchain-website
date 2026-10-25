@@ -27,6 +27,7 @@ pnpm-debug.log*
 .playwright-cli/
 output/playwright/
 output/imagegen/
+output/share/
 
 # local credentials and agent state
 .env.*

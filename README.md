@@ -27,6 +27,16 @@ npm run preview
 
 `npm run build` 会先执行 `astro check`，再生成 `dist/` 静态文件。
 
+## 导出单文件分享版
+
+```bash
+npm run share:html
+```
+
+生成 `output/share/scu-blockchain-offline.html`。将这一个文件发给他人，下载后用新版 Chrome、Edge 或 Safari 打开即可，无须启动服务器。图片、本地字体、样式、React 与 Motion 脚本均内嵌，支持离线查看、成员轮播、档案弹窗和导航；外部网站链接仍需联网。聊天软件内置预览可能禁用脚本，请选择浏览器打开。
+
+该文件是导出时的静态快照，修改网站后重新运行命令即可更新。导出脚本复用正式构建产物，用 `es-module-lexer` 解析模块引用，再通过 import map 嵌入模块；未另写一套展示或交互。文件目前约 8.3 MiB，已保留字体与模板许可，导出产物不加入 Git。
+
 ## 开发原则
 
 优先复用已有组件、样式与依赖；重复展示结构逐步抽成公共组件。开发前请阅读 [AGENTS.md](AGENTS.md) 和 [项目维护说明](docs/plan.md)。

@@ -1412,46 +1412,72 @@ footer p {
   color: var(--text-subtle);
 }
 #main-nav {
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  transform: translateX(-50%);
   top: 20px;
   bottom: auto;
-  width: min(680px, calc(100% - 40px));
+  width: min(1120px, calc(100% - 40px));
   border-radius: 14px;
   background: var(--nav-background);
   border: 1px solid var(--border-subtle);
   box-shadow: 0 8px 32px #00000020;
   backdrop-filter: blur(20px);
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease;
 }
 #main-nav.scrolling {
-  border-radius: 14px;
   background: var(--nav-scrolling-background);
-  border-color: var(--border-subtle);
 }
-#main-nav > div {
-  padding: 10px 18px;
+#main-nav .nav-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: 8px;
+  scrollbar-width: thin;
 }
 #main-nav ul {
-  gap: 8px;
-  justify-content: space-between;
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: max-content;
 }
-#main-nav ul > li {
-  margin-left: 0;
-  flex: 1;
+#main-nav li {
+  flex: 1 0 auto;
 }
 #main-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 44px;
   padding: 9px 12px;
   font-size: 13px;
-  border-radius: 7px;
+  color: var(--white-icon);
+  border-radius: 8px;
+  white-space: nowrap;
+  transition:
+    color 200ms ease,
+    background-color 200ms ease;
+}
+#main-nav .nav-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+#main-nav .nav-icon svg {
+  width: 18px;
+  height: 18px;
 }
 #main-nav a:hover {
   color: var(--foreground);
-  background: color-mix(in srgb, var(--foreground) 1.6%, transparent);
+  background: var(--secondary-wash);
 }
 #main-nav a.active {
   background: var(--primary-wash);
-  color: var(--theme-secondary) !important;
-}
-#main-nav .nav-indicator {
-  display: none;
+  color: var(--theme-secondary);
 }
 @media (max-width: 1023px) {
   .hero {
@@ -1535,15 +1561,20 @@ footer p {
     border-radius: 16px 16px 0 0;
     padding-bottom: env(safe-area-inset-bottom);
   }
-  #main-nav > div {
-    padding: 8px 10px;
+  #main-nav .nav-scroll {
+    padding: 6px 8px;
   }
   #main-nav a {
+    flex-direction: column;
+    gap: 3px;
+    min-width: 56px;
+    min-height: 52px;
     font-size: 10px;
-    padding: 6px 4px;
+    padding: 6px 8px;
   }
-  #main-nav ul {
-    gap: 4px;
+  #main-nav .nav-icon svg {
+    width: 20px;
+    height: 20px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
