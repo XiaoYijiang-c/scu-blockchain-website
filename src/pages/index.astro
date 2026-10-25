@@ -7,17 +7,22 @@ import Collaboration from "@/components/collaboration.astro";
 import Archive from "@/components/archive.astro";
 import Contact from "@/components/contact.astro";
 import Footer from "@/components/footer.astro";
+import { getSiteContent } from "@/lib/cms/content";
+const content = await getSiteContent();
+Astro.response.headers.set("Cache-Control", "no-cache");
 ---
 
 <Layout title="四川大学区块链协会">
-  <a class="skip-link" href="#main-content">跳转到主要内容</a>
+  <a class="skip-link" href="#main-content">
+    跳转到主要内容
+  </a>
   <Nav />
   <main id="main-content" tabindex="-1">
     <Home />
-    <Projects />
-    <Archive />
+    <Projects members={content.members} />
+    <Archive events={content.events} resources={content.resources} />
     <Collaboration />
-    <Contact />
+    <Contact settings={content.settings} />
   </main>
   <Footer />
 </Layout>

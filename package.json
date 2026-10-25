@@ -8,17 +8,25 @@
     "build": "astro check && astro build",
     "share:html": "npm run build && node scripts/export-single-html.mjs",
     "preview": "astro preview",
+    "serve": "node --env-file-if-exists=.env dist/server/entry.mjs",
+    "cms:dev": "npm --prefix studio run dev",
+    "cms:build": "npm --prefix studio run build",
+    "cms:check": "npm --prefix studio run check",
+    "cms:deploy": "npm --prefix studio run deploy",
+    "test:cms": "node --experimental-strip-types --test tests/cms.test.ts",
     "astro": "astro",
     "browser": "playwright-cli",
     "browser:install": "playwright-cli install-browser chromium"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
+    "@astrojs/node": "^11.1.9",
     "@astrojs/react": "^6.0.4",
     "@fontsource-variable/montserrat": "^5.3.0",
     "@fontsource-variable/noto-sans-sc": "^5.3.1",
     "@fontsource-variable/space-grotesk": "^5.3.0",
     "@radix-ui/react-slot": "^1.5.0",
+    "@sanity/client": "^8.11.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -46,6 +54,6 @@
     "shadcn": "^4.22.1"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.12.0"
   }
 }

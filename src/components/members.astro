@@ -3,7 +3,13 @@ import ActivityGallery from "@/components/ui/ActivityGallery.astro";
 import MemberPortrait from "@/components/ui/MemberPortrait.astro";
 import ShowcaseHeading from "@/components/ui/ShowcaseHeading.astro";
 import ShowcaseCard from "@/components/ui/ShowcaseCard.astro";
-import { members } from "@/data/members";
+import type { PublicMember } from "@/lib/cms/types";
+interface Props {
+  members: PublicMember[];
+}
+const { members } = Astro.props as Props;
+const hasPlaceholders = members.some((member) => member.placeholder);
+const hasPhotos = members.some((member) => member.avatarKind === "photo");
 ---
 
 <section
@@ -19,61 +25,72 @@ import { members } from "@/data/members";
       intro="每一个独特的你，都是连接未来的节点。"
     >
       <p class="members-note">
-        <span class="status-dot" aria-hidden="true"></span> 成员资料待补充
+        <span class="status-dot" aria-hidden="true"></span>{" "}
+        {hasPlaceholders ? "成员资料待补充" : "成员公开档案"}
         <br />
-        <span>头像为原创风格插图</span>
+        <span>
+          {hasPlaceholders
+            ? "头像为原创风格插图"
+            : hasPhotos
+              ? "资料经本人确认后公开"
+              : "头像采用插图展示"}
+        </span>
       </p>
     </ShowcaseHeading>
 
-    <ActivityGallery
-      id="member-gallery"
-      label="成员档案"
-      itemCount={members.length}
-    >
-      {members.map((member, index) => (
-        <li
-          class="gallery-card"
-          data-gallery-card
-          data-active={index === 0 ? "true" : "false"}
-        >
-          <ShowcaseCard
-            class="member-card"
-            aria-labelledby={`member-name-${member.id}`}
+    {members.length > 0 ? (
+      <ActivityGallery
+        id="member-gallery"
+        label="成员档案"
+        itemCount={members.length}
+      >
+        {members.map((member, index) => (
+          <li
+            class="gallery-card"
+            data-gallery-card
+            data-active={index === 0 ? "true" : "false"}
           >
-            <MemberPortrait member={member} />
-            <div class="gallery-copy">
-              <div class="member-meta">
-                <span class="gallery-index">MEMBER / {member.id}</span>
-                {member.placeholder && (
-                  <span class="member-status">资料待完善</span>
+            <ShowcaseCard
+              class="member-card"
+              aria-labelledby={`member-name-${member.id}`}
+            >
+              <MemberPortrait member={member} />
+              <div class="gallery-copy">
+                <div class="member-meta">
+                  <span class="gallery-index">MEMBER / {member.id}</span>
+                  {member.placeholder && (
+                    <span class="member-status">资料待完善</span>
+                  )}
+                </div>
+                <h3 id={`member-name-${member.id}`}>{member.name}</h3>
+                <p class="member-role">{member.role}</p>
+                {member.tags.length > 0 && (
+                  <ul class="member-tags" aria-label="研究方向">
+                    {member.tags.map((tag) => (
+                      <li>{tag}</li>
+                    ))}
+                  </ul>
                 )}
+                <p class="member-bio">{member.bio}</p>
+                <button
+                  class="member-profile-button"
+                  type="button"
+                  data-profile-open={`profile-${member.id}`}
+                  aria-haspopup="dialog"
+                  aria-controls={`profile-${member.id}`}
+                  data-magnetic
+                >
+                  <span>{member.placeholder ? "查看档案" : "查看简历"}</span>
+                  <span aria-hidden="true">↗</span>
+                </button>
               </div>
-              <h3 id={`member-name-${member.id}`}>{member.name}</h3>
-              <p class="member-role">{member.role}</p>
-              {member.tags.length > 0 && (
-                <ul class="member-tags" aria-label="研究方向">
-                  {member.tags.map((tag) => (
-                    <li>{tag}</li>
-                  ))}
-                </ul>
-              )}
-              <p class="member-bio">{member.bio}</p>
-              <button
-                class="member-profile-button"
-                type="button"
-                data-profile-open={`profile-${member.id}`}
-                aria-haspopup="dialog"
-                aria-controls={`profile-${member.id}`}
-                data-magnetic
-              >
-                <span>{member.placeholder ? "查看档案" : "查看简历"}</span>
-                <span aria-hidden="true">↗</span>
-              </button>
-            </div>
-          </ShowcaseCard>
-        </li>
-      ))}
-    </ActivityGallery>
+            </ShowcaseCard>
+          </li>
+        ))}
+      </ActivityGallery>
+    ) : (
+      <p class="showcase-status">成员档案正在整理，确认后将在这里展示。</p>
+    )}
 
     <div class="members-footer">
       <span>不同的方向，共同的好奇心。</span>

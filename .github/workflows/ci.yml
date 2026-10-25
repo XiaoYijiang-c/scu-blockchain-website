@@ -26,3 +26,12 @@ jobs:
 
       - name: Type-check & build
         run: npm run build
+
+      - name: Validate public CMS content boundary
+        run: npm run test:cms
+
+      - name: Install Studio dependencies
+        run: npm --prefix studio ci
+
+      - name: Validate Studio schemas
+        run: npm run cms:check

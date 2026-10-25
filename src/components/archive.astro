@@ -1,6 +1,13 @@
 ﻿---
 import ShowcaseHeading from "@/components/ui/ShowcaseHeading.astro";
 import ShowcaseCard from "@/components/ui/ShowcaseCard.astro";
+import EventArchiveCard from "@/components/ui/EventArchiveCard.astro";
+import type { EventRecord, ResourceRecord } from "@/lib/cms/types";
+interface Props {
+  events: EventRecord[];
+  resources: ResourceRecord[];
+}
+const { events, resources } = Astro.props as Props;
 const archiveTypes = ["招新", "主题讲座", "技术沙龙", "Workshop", "参赛纪实"];
 const resourceTypes = [
   "入门路线",
@@ -24,35 +31,49 @@ const resourceTypes = [
       title="活动回顾"
       intro="记录社团的学习、分享与实践。活动图文和讲义将逐步整理归档。"
     />
-    <ol class="archive-shelf showcase-content" aria-label="活动归档分类">
-      {archiveTypes.map((type, index) => (
-        <li
-          data-motion-item
-          style={`--shelf-offset:${index % 2 === 0 ? -1 : 1}`}
-        >
-          <ShowcaseCard class="archive-type">
-            <div class="panel-caption">
-              <span>ARCHIVE / 0{index + 1}</span>
-              <span aria-hidden="true">＋</span>
-            </div>
-            <div class="archive-art" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-              <b>0{index + 1}</b>
-            </div>
-            <div class="archive-copy">
-              <h3>{type}</h3>
-              <span class="showcase-note">待归档</span>
-            </div>
-          </ShowcaseCard>
-        </li>
-      ))}
+    <ol
+      class:list={[
+        "showcase-content",
+        events.length ? "archive-records" : "archive-shelf",
+      ]}
+      aria-label={events.length ? "活动纪实" : "活动归档分类"}
+    >
+      {events.length
+        ? events.map((event) => (
+            <li data-motion-item>
+              <EventArchiveCard event={event} />
+            </li>
+          ))
+        : archiveTypes.map((type, index) => (
+            <li
+              data-motion-item
+              style={`--shelf-offset:${index % 2 === 0 ? -1 : 1}`}
+            >
+              <ShowcaseCard class="archive-type">
+                <div class="panel-caption">
+                  <span>ARCHIVE / 0{index + 1}</span>
+                  <span aria-hidden="true">＋</span>
+                </div>
+                <div class="archive-art" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <b>0{index + 1}</b>
+                </div>
+                <div class="archive-copy">
+                  <h3>{type}</h3>
+                  <span class="showcase-note">待归档</span>
+                </div>
+              </ShowcaseCard>
+            </li>
+          ))}
     </ol>
-    <p class="showcase-status" role="status">
-      <span class="status-dot" aria-hidden="true"></span>活动存档正在整理中 ·
-      后续将在此更新图文纪实与讲义下载
-    </p>
+    {events.length === 0 && (
+      <p class="showcase-status" role="status">
+        <span class="status-dot" aria-hidden="true"></span>活动存档正在整理中 ·
+        后续将在此更新图文纪实与讲义下载
+      </p>
+    )}
   </div>
 </section>
 <section
@@ -83,21 +104,50 @@ const resourceTypes = [
           SHARE.
         </span>
       </div>
-      <ol class="resource-list" aria-label="学习资料分类">
-        {resourceTypes.map((type, index) => (
-          <li class="resource-row" data-motion-item>
-            <span class="resource-index">
-              /{String(index + 1).padStart(2, "0")}
-            </span>
-            <h3>{type}</h3>
-            <span class="resource-state">整理中</span>
-            <span class="resource-line" aria-hidden="true"></span>
-          </li>
-        ))}
+      <ol
+        class="resource-list"
+        aria-label={resources.length ? "公开学习资料" : "学习资料分类"}
+      >
+        {resources.length
+          ? resources.map((resource, index) => (
+              <li class="resource-row" data-motion-item>
+                <span class="resource-index">
+                  /{String(index + 1).padStart(2, "0")}
+                </span>
+                <div class="resource-copy">
+                  <h3>
+                    <a
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {resource.title} <span aria-hidden="true">↗</span>
+                    </a>
+                  </h3>
+                  {resource.description && (
+                    <p class="showcase-note">{resource.description}</p>
+                  )}
+                </div>
+                <span class="resource-state">{resource.category}</span>
+                <span class="resource-line" aria-hidden="true"></span>
+              </li>
+            ))
+          : resourceTypes.map((type, index) => (
+              <li class="resource-row" data-motion-item>
+                <span class="resource-index">
+                  /{String(index + 1).padStart(2, "0")}
+                </span>
+                <h3>{type}</h3>
+                <span class="resource-state">整理中</span>
+                <span class="resource-line" aria-hidden="true"></span>
+              </li>
+            ))}
       </ol>
     </div>
-    <p class="showcase-status">
-      资料库内容持续建设中，公开资料与下载入口将在整理完成后补充。
-    </p>
+    {resources.length === 0 && (
+      <p class="showcase-status">
+        资料库内容持续建设中，公开资料与下载入口将在整理完成后补充。
+      </p>
+    )}
   </div>
 </section>

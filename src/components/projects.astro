@@ -3,6 +3,11 @@ import { ActivityCards } from "@/components/ActivityCards";
 import Members from "@/components/members.astro";
 import RoadmapStory from "@/components/ui/RoadmapStory.astro";
 import ShowcaseHeading from "@/components/ui/ShowcaseHeading.astro";
+import type { PublicMember } from "@/lib/cms/types";
+interface Props {
+  members: PublicMember[];
+}
+const { members } = Astro.props as Props;
 
 const activities = [
   {
@@ -77,7 +82,7 @@ const roadmap = [
   </div>
 </section>
 
-<Members />
+<Members members={members} />
 
 <section
   id="roadmap"

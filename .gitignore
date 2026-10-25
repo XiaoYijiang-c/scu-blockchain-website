@@ -28,6 +28,9 @@ pnpm-debug.log*
 output/playwright/
 output/imagegen/
 output/share/
+studio/dist/
+studio/.sanity/
+studio/.env.local
 
 # local credentials and agent state
 .env.*

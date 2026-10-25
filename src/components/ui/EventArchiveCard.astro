@@ -1,0 +1,51 @@
+---
+import ShowcaseCard from "./ShowcaseCard.astro";
+import type { EventRecord } from "@/lib/cms/types";
+interface Props {
+  event: EventRecord;
+}
+const { event } = Astro.props as Props;
+const dateLabel = new Intl.DateTimeFormat("zh-CN", {
+  timeZone: "Asia/Shanghai",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+}).format(new Date(event.date));
+---
+
+<ShowcaseCard class="event-card">
+  {event.cover && (
+    <img
+      class="event-cover"
+      src={event.cover.url}
+      alt={event.cover.alt || event.title}
+      width="720"
+      height="400"
+      loading="lazy"
+    />
+  )}
+  <div class="event-copy">
+    <div class="panel-caption">
+      <span>{event.category}</span>
+      <time datetime={event.date}>{dateLabel}</time>
+    </div>
+    <h3>{event.title}</h3>
+    <p class="panel-description">{event.summary}</p>
+    {event.body && (
+      <details class="event-details">
+        <summary>阅读全文</summary>
+        <p>{event.body}</p>
+      </details>
+    )}
+    {event.url && (
+      <a
+        class="showcase-link"
+        href={event.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        查看活动资料 <span aria-hidden="true">↗</span>
+      </a>
+    )}
+  </div>
+</ShowcaseCard>

@@ -1,0 +1,48 @@
+---
+import Layout from "@/layouts/Layout.astro";
+const studioUrl =
+  process.env.SANITY_STUDIO_URL || import.meta.env.SANITY_STUDIO_URL;
+Astro.response.headers.set("Cache-Control", "no-store");
+Astro.response.headers.set("X-Robots-Tag", "noindex, nofollow");
+let destination: string | undefined;
+try {
+  const parsed = new URL(studioUrl ?? "");
+  if (parsed.protocol === "https:" && !parsed.username && !parsed.password)
+    destination = parsed.href;
+} catch {
+  /* Setup instructions below remain available until configured. */
+}
+if (destination) return Astro.redirect(destination, 302);
+Astro.response.status = 503;
+---
+
+<Layout title="内容管理设置">
+  <main class="cms-setup">
+    <p class="section-kicker">CONTENT MANAGEMENT</p>
+    <h1 class="section-title">内容管理尚未配置</h1>
+    <p class="section-intro">
+      管理后台由 Sanity Studio 提供。完成项目配置并部署 Studio
+      后，此入口会跳转到后台，由 Sanity 验证管理员身份。
+    </p>
+    <ol>
+      <li>在 Sanity 创建项目和 production 数据集。</li>
+      <li>按照仓库 docs/cms.md 配置项目 ID、数据集和 Studio。</li>
+      <li>将已部署后台的 HTTPS 地址填写到 SANITY_STUDIO_URL。</li>
+    </ol>
+    <a class="showcase-link" href="/">
+      返回网站 <span aria-hidden="true">↗</span>
+    </a>
+  </main>
+</Layout>
+<style>
+  .cms-setup {
+    max-width: 800px;
+    margin: 80px auto;
+  }
+  ol {
+    padding-left: 1.5em;
+    color: var(--white-icon);
+    line-height: 2;
+    margin-bottom: 24px;
+  }
+</style>

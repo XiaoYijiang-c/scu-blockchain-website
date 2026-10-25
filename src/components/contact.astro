@@ -1,6 +1,11 @@
 ---
 import ShowcaseHeading from "@/components/ui/ShowcaseHeading.astro";
 import ShowcaseCard from "@/components/ui/ShowcaseCard.astro";
+import type { SiteSettings } from "@/lib/cms/types";
+interface Props {
+  settings: SiteSettings;
+}
+const { settings } = Astro.props as Props;
 
 const contactOptions = [
   {
@@ -9,6 +14,8 @@ const contactOptions = [
     description: "欢迎对技术、研究与跨学科协作感兴趣的同学加入。",
     qrCaption: "扫码报名入口待补充",
     qrLabel: "招新报名二维码位置预留",
+    qrImage: settings.membershipQr,
+    url: settings.membershipUrl,
   },
   {
     label: "02 · PARTNERSHIP",
@@ -16,13 +23,17 @@ const contactOptions = [
     description: "欢迎高校社团、研究团队、技术社区与赛事伙伴联系交流。",
     qrCaption: "扫码联系通道待补充",
     qrLabel: "合作咨询二维码位置预留",
+    qrImage: settings.cooperationQr,
+    url: settings.cooperationUrl,
   },
 ];
-const contactChannels = [
-  { label: "Instagram", placeholder: "账号待补充" },
-  { label: "QQ群", placeholder: "群号待补充" },
-  { label: "公众号", placeholder: "信息待补充" },
-];
+const contactChannels = settings.channels.length
+  ? settings.channels
+  : [
+      { label: "Instagram", value: "账号待补充", url: undefined },
+      { label: "QQ群", value: "群号待补充", url: undefined },
+      { label: "公众号", value: "信息待补充", url: undefined },
+    ];
 ---
 
 <section
@@ -48,29 +59,58 @@ const contactChannels = [
           </div>
           <div class="join-card-content">
             <div class="join-card-layout">
-              <p class="join-qr-caption">{option.qrCaption}</p>
-              <div
-                class="join-qr-placeholder"
-                role="img"
-                aria-label={option.qrLabel}
-              >
-                <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-                  <path
-                    d="M5 15V5h10M25 5h10v10M35 25v10H25M15 35H5V25"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M14 14h12v12H14z"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-dasharray="3 3"
-                  />
-                </svg>
-                <span>二维码</span>
+              <div class="join-qr-caption">
+                <p>
+                  {option.qrImage
+                    ? "扫码了解详情"
+                    : option.url
+                      ? "通过下方入口了解详情"
+                      : option.qrCaption}
+                </p>
+                {option.url && (
+                  <a
+                    class="showcase-link"
+                    href={option.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {option.title} <span aria-hidden="true">↗</span>
+                  </a>
+                )}
               </div>
+              {option.qrImage ? (
+                <img
+                  class="join-qr-image"
+                  src={option.qrImage.url}
+                  alt={option.qrImage.alt || `${option.title}二维码`}
+                  width="124"
+                  height="124"
+                  loading="lazy"
+                />
+              ) : (
+                <div
+                  class="join-qr-placeholder"
+                  role="img"
+                  aria-label={option.qrLabel}
+                >
+                  <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+                    <path
+                      d="M5 15V5h10M25 5h10v10M35 25v10H25M15 35H5V25"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M14 14h12v12H14z"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-dasharray="3 3"
+                    />
+                  </svg>
+                  <span>二维码</span>
+                </div>
+              )}
             </div>
           </div>
         </ShowcaseCard>
@@ -82,10 +122,18 @@ const contactChannels = [
         {contactChannels.map((channel) => (
           <div
             class="contact-channel"
-            aria-label={`${channel.label}${channel.placeholder}`}
+            aria-label={`${channel.label}${channel.value}`}
           >
             <span>{channel.label}</span>
-            <span>{channel.placeholder}</span>
+            <span>
+              {channel.url ? (
+                <a href={channel.url} target="_blank" rel="noopener noreferrer">
+                  {channel.value} ↗
+                </a>
+              ) : (
+                channel.value
+              )}
+            </span>
           </div>
         ))}
       </div>
