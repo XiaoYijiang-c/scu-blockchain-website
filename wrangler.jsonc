@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "scu-blockchain-website",
+  "account_id": "236397e35a6d655daf1e5ddd69c74553",
   "main": "@astrojs/cloudflare/entrypoints/server",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -9,7 +10,7 @@
     {
       "binding": "DB",
       "database_name": "scu-website-content",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "7988ad6a-f573-4c55-b537-91257210c34d",
       "migrations_dir": "migrations",
     },
   ],

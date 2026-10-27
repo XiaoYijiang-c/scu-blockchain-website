@@ -41,15 +41,19 @@ ADMIN_PASSWORD_HASH=这里填写密码工具生成的完整值
 
 ## 部署到 Cloudflare Workers
 
-仓库的 `wrangler.jsonc` 数据库 ID 是本地开发占位，不能作为生产 ID 使用。先登录自己的 Cloudflare 账号：
+当前网站地址：https://scu-blockchain-website.scu-blockchain.workers.dev ，后台在该地址的 `/admin`。本仓库的 `wrangler.jsonc` 已绑定协会账号的实际 D1 和 R2 资源，维护当前网站时不要重复创建数据库。管理员配置保存在 Cloudflare Secrets，未提交到 Git。
+
+以下创建步骤供首次部署到另一个账号时参考。先登录自己的 Cloudflare 账号（设备授权可避免本地回调端口冲突）：
 
 ```bash
-npx wrangler login
+npx wrangler login --device
 npx wrangler d1 create scu-website-content
 npx wrangler r2 bucket create scu-website-media
 ```
 
 将创建 D1 返回的 `database_id` 填入 `wrangler.jsonc`，保持绑定名 `DB`。如果修改 R2 桶名，同步修改 `bucket_name`，保持绑定名 `MEDIA`。R2 桶保持私有，不启用公开开发 URL；文件通过网站 `/media/…` 路由读取。
+
+换账号时也要更新 `account_id`。R2 首次使用需在 Cloudflare 控制台启用。免费额度不是费用硬上限，超出存储或操作额度会计费；静态网站资源通过 Workers Assets 托管，后台上传的附件才进入 R2。可在 Cloudflare Billing 设置预算提醒，提醒本身不会自动停止服务。新账号还需首次注册免费的 workers.dev 子域名。
 
 ```bash
 npm run db:remote
