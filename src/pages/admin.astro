@@ -1,48 +1,68 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-const studioUrl =
-  process.env.SANITY_STUDIO_URL || import.meta.env.SANITY_STUDIO_URL;
+import AdminApp from "@/components/admin/AdminApp";
+import { bindings } from "@/lib/admin/env";
+import { authenticated, configured } from "@/lib/admin/auth";
+import "../styles/globals.css";
+import "@fontsource-variable/space-grotesk";
+import "@fontsource-variable/noto-sans-sc";
 Astro.response.headers.set("Cache-Control", "no-store");
 Astro.response.headers.set("X-Robots-Tag", "noindex, nofollow");
-let destination: string | undefined;
+Astro.response.headers.set("X-Frame-Options", "DENY");
+Astro.response.headers.set("Referrer-Policy", "same-origin");
+let initialLoggedIn = false;
+let setupError: string | undefined;
 try {
-  const parsed = new URL(studioUrl ?? "");
-  if (parsed.protocol === "https:" && !parsed.username && !parsed.password)
-    destination = parsed.href;
+  const env = bindings();
+  if (!configured(env))
+    setupError =
+      "请按 docs/cms.md 配置管理员账号与密码。本地使用 .dev.vars，线上使用 Cloudflare Secrets。";
+  else initialLoggedIn = await authenticated(Astro.request, env);
 } catch {
-  /* Setup instructions below remain available until configured. */
+  setupError = "数据库尚未就绪，请按 docs/cms.md 执行数据库初始化。";
 }
-if (destination) return Astro.redirect(destination, 302);
-Astro.response.status = 503;
+if (setupError) Astro.response.status = 503;
 ---
 
-<Layout title="内容管理设置">
-  <main class="cms-setup">
-    <p class="section-kicker">CONTENT MANAGEMENT</p>
-    <h1 class="section-title">内容管理尚未配置</h1>
-    <p class="section-intro">
-      管理后台由 Sanity Studio 提供。完成项目配置并部署 Studio
-      后，此入口会跳转到后台，由 Sanity 验证管理员身份。
-    </p>
-    <ol>
-      <li>在 Sanity 创建项目和 production 数据集。</li>
-      <li>按照仓库 docs/cms.md 配置项目 ID、数据集和 Studio。</li>
-      <li>将已部署后台的 HTTPS 地址填写到 SANITY_STUDIO_URL。</li>
-    </ol>
-    <a class="showcase-link" href="/">
-      返回网站 <span aria-hidden="true">↗</span>
-    </a>
-  </main>
-</Layout>
-<style>
-  .cms-setup {
-    max-width: 800px;
-    margin: 80px auto;
+<!doctype html>
+<html lang="zh-CN" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>内容管理 · 四川大学区块链协会</title>
+    <link rel="icon" href="/favicon.png" />
+  </head>
+  <body class="min-w-80 bg-background px-4 text-foreground sm:px-8">
+    <main>
+      <AdminApp
+        client:load
+        initialLoggedIn={initialLoggedIn}
+        setupError={setupError}
+      />
+    </main>
+  </body>
+</html>
+<style is:global>
+  html {
+    color-scheme: dark;
+    font-family: "Space Grotesk Variable", "Noto Sans SC Variable", sans-serif;
   }
-  ol {
-    padding-left: 1.5em;
-    color: var(--white-icon);
-    line-height: 2;
-    margin-bottom: 24px;
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 </style>

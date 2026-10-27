@@ -6,7 +6,7 @@
 
 ## 技术栈
 
-- Astro 7 + Node.js 服务端页面，Sanity 内容管理
+- Astro 7 + Cloudflare Workers，D1 / R2 自建内容管理
 - TypeScript、React（模板中的少量交互组件）、Tailwind CSS
 - Node.js 22.12 或更高版本
 - **npm**：仓库使用 `package-lock.json` 与 `.github/workflows/ci.yml` 中的 `npm ci`。
@@ -27,7 +27,7 @@ npm run preview
 
 `npm run build` 会先执行 `astro check`，再生成 `dist/` 构建产物。
 
-当前内容管理分支构建产物包含 Node 服务端，使用 `npm run serve` 启动。成员、活动、资源及联系方式的后台设置见 [内容管理说明](docs/cms.md)。没有配置 Sanity 时，本地仍可预览现有页面。
+当前分支使用 Cloudflare Workers 运行网站，D1 存内容，R2 存附件。执行 `npm run db:local` 后运行 `npm run dev`，后台入口为 `/admin`。管理员设置、内容发布与部署步骤见 [内容管理说明](docs/cms.md)。
 
 ## 导出单文件分享版
 
@@ -90,7 +90,7 @@ git push
 
 ## 部署
 
-项目采用 Astro Node standalone 输出。构建命令为 `npm run build`，启动命令为 `node dist/server/entry.mjs`，需要 Node.js 22.12 或更高版本及支持 Node 服务的部署环境。配置 Sanity 后，网站按请求读取已发布内容。环境变量及后台部署方式见 [内容管理说明](docs/cms.md)。域名尚未确定，因此页面暂未设置虚构 canonical 地址。
+项目采用 Cloudflare Workers 输出，开发工具需要 Node.js 22.12 或更高版本。构建后用 `npm run preview` 本地预览；完成 Cloudflare 资源绑定及管理员配置后执行 `npm run deploy`。生产环境按请求读取 D1 中已发布内容，无需重新构建即可更新。配置与备份见 [内容管理说明](docs/cms.md)。域名尚未确定，因此页面暂未设置虚构 canonical 地址。
 
 ## 模板与许可
 

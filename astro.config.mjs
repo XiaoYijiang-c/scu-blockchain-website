@@ -3,7 +3,7 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
 import react from "@astrojs/react";
-import node from "@astrojs/node";
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,7 +21,8 @@ export default defineConfig({
     },
   },
   output: "server",
-  adapter: node({ mode: "standalone" }),
+  session: false, // Admin sessions are stored in D1; no additional KV binding.
+  adapter: cloudflare({ imageService: "compile" }),
   build: {
     inlineStylesheets: "auto",
   },

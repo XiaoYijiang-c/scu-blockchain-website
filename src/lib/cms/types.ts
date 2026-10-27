@@ -36,5 +36,5 @@ export interface SiteContent {
   events: EventRecord[];
   resources: ResourceRecord[];
   settings: SiteSettings;
-  source: "local" | "sanity" | "fallback";
+  source: "local" | "cloudflare" | "fallback";
 }

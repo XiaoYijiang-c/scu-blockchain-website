@@ -1,0 +1,3 @@
+# Copy to .dev.vars and generate your own password hash with npm run admin:password.
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD_HASH=

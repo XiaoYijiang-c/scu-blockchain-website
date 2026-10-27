@@ -8,6 +8,12 @@ const optionalText = (max = 2000) =>
     .transform((value) => value ?? "");
 export function safePublicUrl(value: unknown): string | undefined {
   if (typeof value !== "string" || value.length > 4096) return;
+  if (
+    /^\/media\/[a-f0-9-]{36}\.(?:jpg|png|webp|pdf|zip|txt|docx|pptx)$/.test(
+      value,
+    )
+  )
+    return value;
   try {
     const url = new URL(value);
     if (
@@ -28,7 +34,7 @@ const image = z
   .transform((value): CmsImage | undefined => {
     if (!value) return;
     const url = safePublicUrl(value.url);
-    if (!url || new URL(url).hostname !== "cdn.sanity.io") return;
+    if (!url || !/^\/media\/[a-f0-9-]{36}\.(jpg|png|webp)$/.test(url)) return;
     return { url, alt: value.alt };
   });
 const identity = {
@@ -41,7 +47,7 @@ const identity = {
         !id.startsWith("versions."),
     ),
 };
-const member = z.object({
+export const member = z.object({
   ...identity,
   visible: z.literal(true),
   consentConfirmed: z.literal(true),
@@ -60,7 +66,7 @@ const member = z.object({
     .max(10)
     .nullish(),
 });
-const event = z.object({
+export const event = z.object({
   ...identity,
   visible: z.literal(true),
   title: text(200).min(1),
@@ -71,7 +77,7 @@ const event = z.object({
   cover: image,
   url: safeLink,
 });
-const resource = z
+export const resource = z
   .object({
     ...identity,
     visible: z.literal(true),
@@ -82,7 +88,7 @@ const resource = z
     fileUrl: safeLink,
   })
   .refine((value) => Boolean(value.url || value.fileUrl));
-const settings = z.object({
+export const settings = z.object({
   membershipUrl: safeLink,
   membershipQr: image,
   cooperationUrl: safeLink,

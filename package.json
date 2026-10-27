@@ -8,25 +8,24 @@
     "build": "astro check && astro build",
     "share:html": "npm run build && node scripts/export-single-html.mjs",
     "preview": "astro preview",
-    "serve": "node --env-file-if-exists=.env dist/server/entry.mjs",
-    "cms:dev": "npm --prefix studio run dev",
-    "cms:build": "npm --prefix studio run build",
-    "cms:check": "npm --prefix studio run check",
-    "cms:deploy": "npm --prefix studio run deploy",
-    "test:cms": "node --experimental-strip-types --test tests/cms.test.ts",
+    "serve": "astro preview",
+    "deploy": "npm run build && wrangler deploy",
+    "db:local": "wrangler d1 migrations apply DB --local",
+    "db:remote": "wrangler d1 migrations apply DB --remote",
+    "admin:password": "node scripts/admin-password.mjs",
+    "test:cms": "node --experimental-strip-types --test tests/cms.test.ts tests/admin.test.ts",
     "astro": "astro",
     "browser": "playwright-cli",
     "browser:install": "playwright-cli install-browser chromium"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
-    "@astrojs/node": "^11.1.9",
+    "@astrojs/cloudflare": "~14.3.0",
     "@astrojs/react": "^6.0.4",
     "@fontsource-variable/montserrat": "^5.3.0",
     "@fontsource-variable/noto-sans-sc": "^5.3.1",
     "@fontsource-variable/space-grotesk": "^5.3.0",
     "@radix-ui/react-slot": "^1.5.0",
-    "@sanity/client": "^8.11.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -37,6 +36,7 @@
     "lucide-react": "^1.60.0",
     "motion": "^14.4.0",
     "ogl": "^1.0.11",
+    "radix-ui": "^1.8.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "sharp": "^0.35.4",
@@ -46,14 +46,21 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261026.1",
     "@playwright/cli": "0.1.22",
     "@types/node": "^26.5.1",
     "es-module-lexer": "2.3.2",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^1.0.0",
-    "shadcn": "^4.22.1"
+    "shadcn": "^4.22.1",
+    "wrangler": "^4.153.0"
   },
   "engines": {
     "node": ">=22.12.0"
+  },
+  "overrides": {
+    "undici@^7": "7.30.1",
+    "devalue@^5": "5.9.4",
+    "@grpc/grpc-js": "1.14.6"
   }
 }

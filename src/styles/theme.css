@@ -46,6 +46,7 @@
   --border: var(--border-subtle);
   --input: var(--border);
   --ring: var(--theme-secondary);
+  --destructive: var(--theme-accent);
   --component-bg: var(--card);
   --sec: var(--primary-soft);
   --white: var(--foreground);
